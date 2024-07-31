@@ -1,5 +1,11 @@
+import LoginView from "./views/Login/LoginView";
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <LoginView />
+    </div>
+  );
 }
 
 export default App;

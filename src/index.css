@@ -1,0 +1,9 @@
+@font-face {
+  font-family: Web;
+  src: url(./assets/Titillium_Web/TitilliumWeb-Regular.ttf);
+}
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: Web;
+}
