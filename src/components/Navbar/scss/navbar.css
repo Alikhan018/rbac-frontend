@@ -1,0 +1,52 @@
+:root {
+  --blue: #0039a6;
+}
+
+.header-container {
+  display: flex;
+  border-bottom: 1px solid rgb(212, 209, 209);
+  justify-content: space-between;
+  width: 100%;
+}
+.header-container .logo-left {
+  padding-left: 20px;
+}
+.header-container .logo-left img {
+  width: 100px;
+  height: 60px;
+}
+.header-container nav {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 10px;
+}
+.header-container nav ul {
+  padding: 10px;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+.header-container nav ul li {
+  list-style: none;
+}
+.header-container nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+.header-container nav ul li a:hover {
+  color: var(--blue);
+}
+.header-container .icons-list {
+  padding: 10px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.header-container .icons-list .fa-icon {
+  cursor: pointer;
+}
+.header-container .icons-list .fa-icon:hover {
+  color: var(--blue);
+}/*# sourceMappingURL=navbar.css.map */

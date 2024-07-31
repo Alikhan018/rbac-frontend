@@ -1,0 +1,33 @@
+:root {
+  --blue: #0039a6;
+}
+
+.settings {
+  position: fixed;
+  top: 45px;
+  right: 20px;
+  border: 1px solid black;
+  display: flex;
+  background-color: white;
+}
+.settings ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings ul li {
+  box-sizing: border-box;
+  padding: 5px;
+  list-style: none;
+  border-bottom: 1px solid black;
+}
+.settings ul li:last-child {
+  border: none;
+}
+.settings ul li a {
+  text-decoration: none;
+  color: black;
+}
+.settings ul li a:hover {
+  color: var(--blue);
+}/*# sourceMappingURL=settings.css.map */

@@ -1,0 +1,34 @@
+:root {
+  --blue: #0039a6;
+}
+.settings {
+  position: fixed;
+  top: 45px;
+  right: 20px;
+  border: 1px solid black;
+  display: flex;
+  //   width: 150px;
+  background-color: white;
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    li {
+      box-sizing: border-box;
+      //   width: 150px;
+      padding: 5px;
+      list-style: none;
+      border-bottom: 1px solid black;
+      &:last-child {
+        border: none;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+        &:hover {
+          color: var(--blue);
+        }
+      }
+    }
+  }
+}
