@@ -6,7 +6,12 @@
   flex-direction: column;
   width: 300px;
   justify-content: center;
-  /* align-items: center; */
+  gap: 15px;
+}
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .input {
   display: flex;
@@ -26,6 +31,9 @@ input:focus,
 input:valid {
   outline: none;
   border: 1px solid var(--blue);
+}
+select {
+  width: 300px;
 }
 input:focus + label,
 input:valid + label {
