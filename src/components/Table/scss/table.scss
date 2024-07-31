@@ -1,0 +1,35 @@
+:root {
+  --blue: #0039a6;
+}
+.table {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  .table-head {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: var(--blue);
+    color: white;
+    span {
+      width: 25%;
+      text-align: left;
+    }
+  }
+  .table-body {
+    border: 1px solid black;
+    .table-row {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid black;
+      justify-content: space-between;
+      span {
+        width: 25%;
+        text-align: left;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
