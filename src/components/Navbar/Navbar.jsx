@@ -17,7 +17,13 @@ export default function Navbar() {
   return (
     <div className="header-container">
       <div className="logo-left">
-        <img src={logo} alt="logo here" />
+        <img
+          src={logo}
+          alt="logo here"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        />
       </div>
       <nav>
         <ul>

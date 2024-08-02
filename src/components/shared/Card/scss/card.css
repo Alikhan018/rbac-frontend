@@ -1,0 +1,31 @@
+:root {
+  --blue: #0039a6;
+}
+
+.layout {
+  width: 300px;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid rgb(195, 193, 193);
+}
+.layout .card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.layout .card .upper-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.layout .card .upper-card .upper-inner {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.layout .card .upper-card .open {
+  cursor: pointer;
+}
+.layout .card .upper-card .open:hover {
+  color: var(--blue);
+}/*# sourceMappingURL=card.css.map */

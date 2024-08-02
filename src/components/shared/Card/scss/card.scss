@@ -1,0 +1,30 @@
+:root {
+  --blue: #0039a6;
+}
+.layout {
+  width: 300px;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid rgb(195, 193, 193);
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .upper-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .upper-inner {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+      }
+      .open {
+        cursor: pointer;
+        &:hover {
+          color: var(--blue);
+        }
+      }
+    }
+  }
+}
