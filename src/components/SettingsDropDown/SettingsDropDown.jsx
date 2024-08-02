@@ -1,6 +1,6 @@
 import "./scss/settings.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faKey, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faSignOut, faKey } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 export default function SettingsDropDown() {
@@ -8,10 +8,6 @@ export default function SettingsDropDown() {
     <>
       <div className="settings">
         <ul>
-          <li>
-            <a href="/">Settings</a>
-            <FontAwesomeIcon icon={faGear} style={{ paddingLeft: "5px" }} />
-          </li>
           <li>
             <a href="/">Change Password</a>
             <FontAwesomeIcon icon={faKey} style={{ paddingLeft: "5px" }} />

@@ -1,10 +1,17 @@
+import "./scss/home.css";
+
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import Card from "../../components/shared/Card/Card";
+import { users, groups, roles } from "../../props/card";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <div className="container">
+        <Card entity={users} />
+        <Card entity={groups} />
+        <Card entity={roles} />
+      </div>
     </>
   );
 }

@@ -1,22 +1,22 @@
-// import Table from "./components/Table/Table";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Card from "./components/shared/Card/Card";
 import Home from "./views/HomeView/Home";
+import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginView from "./views/Login/LoginView";
 
-// import LoginView from "./views/Login/LoginView";
-const user = {
-  icon: faUser,
-  name: "users",
-  qty: 5,
-};
 function App() {
   return (
-    <div>
-      {/* <LoginView /> */}
-      <Home />
-      {/* <Table /> */}
-      <Card entity={user} />
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginView />} />
+          <Route>
+            <Route path="/home" element={<Navbar />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+      {/* <Navbar /> */}
+      {/* <Home /> */}
+    </>
   );
 }
 

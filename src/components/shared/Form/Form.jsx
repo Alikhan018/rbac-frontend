@@ -3,17 +3,18 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 export default function Form({ inputs }) {
-  const initialState = inputs.reduce((entry, field) => {
-    entry[field.id] = "";
-    return entry;
-  }, {});
   const inputFields = inputs.filter((input) => {
     return input.options.type === "input";
   });
   const buttons = inputs.filter((input) => {
     return input.options.type === "button";
   });
+  const initialState = inputFields.reduce((entry, field) => {
+    entry[field.id] = "";
+    return entry;
+  }, {});
   const [formData, setFormData] = useState(initialState);
+  console.log(formData);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevState) => ({
