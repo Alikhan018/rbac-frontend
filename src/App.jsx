@@ -1,7 +1,8 @@
 import Home from "./views/HomeView/Home";
-import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginView from "./views/Login/LoginView";
+import Layout from "./components/Layout/Layout";
+import Users from "./views/Users/Users"
 
 function App() {
   return (
@@ -9,13 +10,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginView />} />
-          <Route>
-            <Route path="/home" element={<Navbar />} />
+          <Route path="/" element={<Layout />}>
+            <Route path="home" element={<Home />} />
+            <Route path="users" element={<Users />} />
           </Route>
         </Routes>
       </BrowserRouter>
-      {/* <Navbar /> */}
-      {/* <Home /> */}
     </>
   );
 }

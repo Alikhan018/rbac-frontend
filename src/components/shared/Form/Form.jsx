@@ -1,8 +1,11 @@
 import "./form.css";
 import React, { useState } from "react";
+import UserServices from "../../../services/users.services";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 export default function Form({ inputs }) {
+  const navigate = useNavigate();
   const inputFields = inputs.filter((input) => {
     return input.options.type === "input";
   });
@@ -14,7 +17,6 @@ export default function Form({ inputs }) {
     return entry;
   }, {});
   const [formData, setFormData] = useState(initialState);
-  console.log(formData);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevState) => ({
@@ -22,8 +24,20 @@ export default function Form({ inputs }) {
       [id]: value,
     }));
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const us = new UserServices();
+    try {
+      const response = await us.login(formData);
+      if (response.message === "logged in") {
+        navigate("home");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit}>
       <div className="form-fields">
         {inputFields.map(
           ({ id, type, label, name, selectValues, required }) => {

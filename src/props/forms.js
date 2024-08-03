@@ -1,21 +1,23 @@
 const loginForm = [
   {
-    id: 1,
+    id: "email",
     type: "text",
     label: "Enter Email",
     name: "email",
     options: {
       type: "input",
     },
+    required: true,
   },
   {
-    id: 2,
+    id: "password",
     type: "password",
     label: "Enter Password",
     name: "password",
     options: {
       type: "input",
     },
+    required: true,
   },
   {
     id: 3,

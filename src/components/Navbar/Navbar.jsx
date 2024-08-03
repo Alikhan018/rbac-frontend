@@ -31,7 +31,7 @@ export default function Navbar() {
             <a href="/">Home</a>
           </li>
           <li>
-            <a href="/">Users</a>
+            <a href="/users">Users</a>
           </li>
         </ul>
       </nav>
