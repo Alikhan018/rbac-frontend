@@ -17,4 +17,18 @@ export default class GroupServices {
       return err;
     }
   }
+  async deleteGroup(id) {
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.delete(
+        `${this.baseUrl}/groups/${id}/delete`
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 }

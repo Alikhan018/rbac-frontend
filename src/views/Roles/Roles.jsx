@@ -7,10 +7,10 @@ import { headerRoles } from "../../props/tables";
 export default function Groups() {
   const [roles, setRoles] = useState([]);
   const [err, setErr] = useState(false);
+  const rs = new RolesServices();
   useEffect(() => {
     const getData = async () => {
       try {
-        const rs = new RolesServices();
         const response = await rs.getAllRoles();
         setRoles(response.data);
         setErr(false);
@@ -21,12 +21,22 @@ export default function Groups() {
     };
     getData();
   }, []);
+  const onDelete = (id) => {
+    try {
+      rs.deleteRole(id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div className="user-container">
         {err && <Error />}
         <h1>Roles</h1>
-        {roles && <Table header={headerRoles} data={roles} />}
+        {roles && (
+          <Table header={headerRoles} data={roles} onDelete={onDelete} />
+        )}
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import DropDown from "../../DropDown/DropDown";
+import Button from "../Button/Button";
 
 export default function Table({ header, data, onDelete }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -12,6 +13,7 @@ export default function Table({ header, data, onDelete }) {
 
   return (
     <div className="table">
+      <Button text={"Add new"} type={"submit"} />
       <div className="table-head">
         {keys.map((key, index) => (
           <span className="table-cell" key={index}>
