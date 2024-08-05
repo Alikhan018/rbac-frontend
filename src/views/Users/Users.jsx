@@ -1,3 +1,4 @@
+import "./scss/users.css";
 import React, { useEffect, useState } from "react";
 import Table from "../../components/shared/Table/Table";
 import Error from "../../components/Error/Error";
@@ -23,8 +24,11 @@ export default function Users() {
   }, []);
   return (
     <>
-      {err && <Error />}
-      {users && <Table header={headerUsers} data={users} />}
+      <div className="user-container">
+        <h1>Users</h1>
+        {err && <Error />}
+        {users && <Table header={headerUsers} data={users} />}
+      </div>
     </>
   );
 }

@@ -17,6 +17,7 @@ export default function Form({ inputs }) {
     return entry;
   }, {});
   const [formData, setFormData] = useState(initialState);
+  const [falseCredentials, setFalseCredentials] = useState(false);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevState) => ({
@@ -30,7 +31,10 @@ export default function Form({ inputs }) {
     try {
       const response = await us.login(formData);
       if (response.message === "logged in") {
+        setFalseCredentials(false);
         navigate("home");
+      } else {
+        setFalseCredentials(true);
       }
     } catch (err) {
       console.log(err);
@@ -39,6 +43,9 @@ export default function Form({ inputs }) {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form-fields">
+        {falseCredentials && (
+          <div style={{ color: "red" }}>Invalid Credentials!</div>
+        )}
         {inputFields.map(
           ({ id, type, label, name, selectValues, required }) => {
             if (type === "select") {

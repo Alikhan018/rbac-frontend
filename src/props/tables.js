@@ -1,6 +1,7 @@
 const headerUsers = {
   id: "id",
-  email: "email",
+  email: "Email",
+  actions: "Actions",
 };
 
 export { headerUsers };

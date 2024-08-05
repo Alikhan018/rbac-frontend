@@ -1,5 +1,7 @@
 import "./scss/table.css";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 export default function Table({ header, data }) {
   const keys = Object.keys(header);
@@ -17,15 +19,20 @@ export default function Table({ header, data }) {
           <div key={tupleIndex} className="table-row">
             {keys.map((key, keyIndex) => (
               <span key={keyIndex} data-label={key}>
-                {key === "actions"
-                  ? tuple[key].map((action, actionIndex) => (
-                      <span key={actionIndex}>
-                        {typeof action === "object"
-                          ? JSON.stringify(action)
-                          : action}
-                      </span>
-                    ))
-                  : tuple[key]}
+                {key === "actions" ? (
+                  <FontAwesomeIcon
+                    icon={faEllipsisV}
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      width: "30%",
+                      alignItems: "center",
+                      padding: "3px 0px 0px 0px",
+                    }}
+                  />
+                ) : (
+                  tuple[key]
+                )}
               </span>
             ))}
           </div>
