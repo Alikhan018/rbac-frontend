@@ -28,4 +28,17 @@ export default class UserServices {
       return err;
     }
   }
+  async deleteUser(id) {
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.delete(`${this.baseUrl}/users/${id}/delete`);
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 }

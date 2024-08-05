@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import DropDown from "../../DropDown/DropDown";
 
-export default function Table({ header, data }) {
+export default function Table({ header, data, onDelete }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
 
@@ -33,11 +33,11 @@ export default function Table({ header, data }) {
                     <FontAwesomeIcon
                       icon={faEllipsisV}
                       style={{
+                        width: "10px",
                         cursor: "pointer",
                         color: hoveredIndex === tupleIndex ? "blue" : "black",
                         display: "flex",
                         justifyContent: "flex-end",
-                        width: "30%",
                         alignItems: "center",
                         padding: "3px 0px 0px 0px",
                       }}
@@ -49,7 +49,9 @@ export default function Table({ header, data }) {
                         )
                       }
                     />
-                    {clickedIndex === tupleIndex && <DropDown />}
+                    {clickedIndex === tupleIndex && (
+                      <DropDown onDelete={() => onDelete(tuple.id)} />
+                    )}
                   </>
                 ) : (
                   tuple[key]

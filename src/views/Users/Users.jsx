@@ -7,10 +7,10 @@ import { headerUsers } from "../../props/tables";
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [err, setErr] = useState(false);
+  const us = new UserServices();
   useEffect(() => {
     const getData = async () => {
       try {
-        const us = new UserServices();
         const response = await us.getAllUsers();
         setUsers(response.data);
         setErr(false);
@@ -21,12 +21,22 @@ export default function Users() {
     };
     getData();
   }, []);
+  const onDelete = (id) => {
+    try {
+      us.deleteUser(id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <div className="user-container">
         <h1>Users</h1>
         {err && <Error />}
-        {users && <Table header={headerUsers} data={users} />}
+        {users && (
+          <Table header={headerUsers} data={users} onDelete={onDelete} />
+        )}
       </div>
     </>
   );
