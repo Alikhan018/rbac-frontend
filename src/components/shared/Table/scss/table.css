@@ -8,6 +8,8 @@
   flex-direction: column;
 }
 .table .table-head {
+  padding-left: 5px;
+  box-sizing: border-box;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -19,6 +21,8 @@
   text-align: left;
 }
 .table .table-body {
+  padding-left: 5px;
+  box-sizing: border-box;
   border: 1px solid black;
 }
 .table .table-body .table-row {

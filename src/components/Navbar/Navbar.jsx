@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import SettingsDropDown from "../SettingsDropDown/SettingsDropDown";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const navigate = useNavigate();
 
   const iconStyle = {
     fontSize: "18px",
@@ -21,17 +23,17 @@ export default function Navbar() {
           src={logo}
           alt="logo here"
           onClick={() => {
-            window.location.href = "/";
+            navigate("home");
           }}
         />
       </div>
       <nav>
         <ul>
           <li>
-            <a href="/">Home</a>
+            <Link to="/home">Home</Link>
           </li>
           <li>
-            <a href="/users">Users</a>
+            <Link to="/users">Users</Link>
           </li>
         </ul>
       </nav>

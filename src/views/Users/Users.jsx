@@ -12,7 +12,6 @@ export default function Users() {
       try {
         const us = new UserServices();
         const response = await us.getAllUsers();
-        console.log(response);
         setUsers(response.data);
         setErr(false);
       } catch (err) {

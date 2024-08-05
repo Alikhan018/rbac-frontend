@@ -1,8 +1,8 @@
-.container {
+.err-container {
   padding: 20px;
   display: flex;
   justify-content: center;
 }
-.container h1 {
+.err-container h1 {
   text-align: center;
 }/*# sourceMappingURL=error.css.map */

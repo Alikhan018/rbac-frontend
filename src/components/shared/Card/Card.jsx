@@ -1,6 +1,7 @@
 import "./scss/card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import React from "react";
 
 export default function Card({ entity }) {
@@ -12,7 +13,9 @@ export default function Card({ entity }) {
             <FontAwesomeIcon icon={entity.icon} />
             <span>{entity.name}</span>
           </div>
-          <FontAwesomeIcon icon={faUpRightFromSquare} className="open"/>
+          <Link to={`/${entity.link}`}>
+            <FontAwesomeIcon icon={faUpRightFromSquare} className="open" />
+          </Link>
         </div>
         <div className="lower-card">
           Total {entity.name}: {entity.qty}

@@ -1,0 +1,27 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  position: absolute;
+  top: 10px;
+  left: -60px;
+  background-color: white;
+  border: 1px solid black;
+  div {
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    display: flex;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+    &:last-child {
+      border: none;
+      &:hover {
+        color: red;
+      }
+    }
+    &:hover {
+      color: blue;
+    }
+  }
+}
