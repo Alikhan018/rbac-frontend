@@ -3,8 +3,10 @@ import RolesServices from "../../services/roles.services";
 import Table from "../../components/shared/Table/Table";
 import Error from "../../components/Error/Error";
 import { headerRoles } from "../../props/tables";
+import { useNavigate } from "react-router-dom";
 
 export default function Groups() {
+  const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [err, setErr] = useState(false);
   const rs = new RolesServices();
@@ -29,13 +31,17 @@ export default function Groups() {
       console.log(err);
     }
   };
+  const handleAddClick = () => {
+    navigate("add-new-role");
+  };
   return (
     <>
       <div className="user-container">
         {err && <Error />}
         <h1>Roles</h1>
         {roles && (
-          <Table header={headerRoles} data={roles} onDelete={onDelete} />
+          <Table header={headerRoles} data={roles} onDelete={onDelete} btnText={"Add new role"}
+            onAdd={handleAddClick}/>
         )}
       </div>
     </>

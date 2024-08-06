@@ -1,0 +1,26 @@
+button {
+  padding: 5px 10px;
+  color: white;
+  border-radius: 7px;
+  cursor: pointer;
+  border: none;
+}
+
+.primary {
+  background-color: #0039a6;
+  &:hover {
+    background-color: #022e81;
+  }
+}
+.danger {
+  background-color: rgb(245, 28, 28);
+  &:hover {
+    background-color: rgb(208, 22, 22);
+  }
+}
+.success {
+  background-color: green;
+  &:hover {
+    background-color: rgb(1, 95, 1);
+  }
+}
