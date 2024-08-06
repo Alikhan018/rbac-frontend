@@ -32,7 +32,7 @@ export default function Groups() {
     }
   };
   const handleAddClick = () => {
-    navigate("add-new-group");
+    navigate("/add-new-group");
   };
   return (
     <>
@@ -46,6 +46,7 @@ export default function Groups() {
             onDelete={onDelete}
             btnText={"Add new user"}
             onAdd={handleAddClick}
+            addBtn={true}
           />
         )}
       </div>

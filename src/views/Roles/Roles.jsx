@@ -32,7 +32,7 @@ export default function Groups() {
     }
   };
   const handleAddClick = () => {
-    navigate("add-new-role");
+    navigate("/add-new-role");
   };
   return (
     <>
@@ -40,8 +40,14 @@ export default function Groups() {
         {err && <Error />}
         <h1>Roles</h1>
         {roles && (
-          <Table header={headerRoles} data={roles} onDelete={onDelete} btnText={"Add new role"}
-            onAdd={handleAddClick}/>
+          <Table
+            header={headerRoles}
+            data={roles}
+            onDelete={onDelete}
+            btnText={"Add new role"}
+            onAdd={handleAddClick}
+            addBtn={true}
+          />
         )}
       </div>
     </>

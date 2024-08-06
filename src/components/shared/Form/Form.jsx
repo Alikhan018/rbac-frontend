@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import UserServices from "../../../services/users.services";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import Table from "../Table/Table";
 
 export default function Form({ inputs }) {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function Form({ inputs }) {
                     {selectValues.map((value, index) => {
                       return (
                         <option key={index} value={value.value}>
-                          {value.value}
+                          {value}
                         </option>
                       );
                     })}
@@ -82,6 +83,7 @@ export default function Form({ inputs }) {
           }
         )}
       </div>
+      {/* <Table addBtn={false} /> */}
       <div className="form-buttons">
         {buttons.map((button) => (
           <button key={button.id} type={button.type}>

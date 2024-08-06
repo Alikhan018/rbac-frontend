@@ -34,7 +34,7 @@ export default function Users() {
     }
   };
   const handleAddClick = () => {
-    navigate("add-new-user");
+    navigate("/add-new-user");
   };
   return (
     <>
@@ -48,6 +48,7 @@ export default function Users() {
             onDelete={onDelete}
             btnText={"Add new user"}
             onAdd={handleAddClick}
+            addBtn={true}
           />
         )}
       </div>

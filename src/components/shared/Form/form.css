@@ -23,7 +23,7 @@ input {
 }
 .input label {
   position: relative;
-  top: -38px;
+  top: -39px;
   left: 10px;
   transition: 0.2s;
 }
@@ -40,7 +40,7 @@ input:valid + label {
   top: -49px;
   left: 7px;
   width: 150px;
-  font-size: 14px;
+  font-size: 11px;
   color: var(--blue);
   background-color: white;
 }
