@@ -9,9 +9,9 @@ export default function Groups() {
   const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
   const [err, setErr] = useState(false);
-  const gs = new GroupServices();
   useEffect(() => {
     const getData = async () => {
+      const gs = new GroupServices();
       try {
         const response = await gs.getAllGroups();
         setGroups(response.data);
@@ -24,9 +24,11 @@ export default function Groups() {
     getData();
   }, []);
   const onDelete = (id) => {
+    const gs = new GroupServices();
     try {
       gs.deleteGroup(id);
-      window.location.reload();
+      const filter = groups.filter((group) => group.id !== id);
+      setGroups(filter);
     } catch (err) {
       console.log(err);
     }

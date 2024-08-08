@@ -2,7 +2,7 @@ import React from "react";
 import { addForm } from "../../props/forms";
 import Form from "../../components/shared/Form/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createUser, createGroup } from "../../props/formHandlers";
+import { createUser, createGroup, createRole } from "../../props/formHandlers";
 import { useNavigate } from "react-router-dom";
 
 export default function AddNew({ entity, icon }) {
@@ -55,6 +55,10 @@ export default function AddNew({ entity, icon }) {
           showGroups={true}
           showRoles={false}
           showUsers={true}
+          onClick={(formData) => {
+            createRole(formData);
+            nav("/roles")
+          }}
         />
       )}
     </div>

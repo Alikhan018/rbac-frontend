@@ -29,4 +29,23 @@ export default class RolesServices {
       return err;
     }
   }
+  async create(role) {
+    const { name, users, groups, features } = role;
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.post(`${this.baseUrl}/roles/create`, {
+        name,
+        groups,
+        users,
+        features,
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 }

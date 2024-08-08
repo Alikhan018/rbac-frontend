@@ -9,8 +9,9 @@ export default function Groups() {
   const navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [err, setErr] = useState(false);
-  const rs = new RolesServices();
+
   useEffect(() => {
+    const rs = new RolesServices();
     const getData = async () => {
       try {
         const response = await rs.getAllRoles();
@@ -24,9 +25,11 @@ export default function Groups() {
     getData();
   }, []);
   const onDelete = (id) => {
+    const rs = new RolesServices();
     try {
       rs.deleteRole(id);
-      window.location.reload();
+      const filter = roles.filter((role) => role.id !== id);
+      setRoles(filter);
     } catch (err) {
       console.log(err);
     }

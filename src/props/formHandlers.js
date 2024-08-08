@@ -12,3 +12,8 @@ export const createGroup = async (groupData) => {
   const gs = new GroupServices();
   await gs.create(groupData);
 };
+
+export const createRole = async (roleData) => {
+  const rs = new RolesServices();
+  await rs.create(roleData);
+};
