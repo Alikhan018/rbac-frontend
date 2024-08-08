@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createUser, createGroup, createRole } from "../../props/formHandlers";
 import { useNavigate } from "react-router-dom";
 
-export default function AddNew({ entity, icon }) {
+export default function AddUpdate({ entity, icon }) {
   const nav = useNavigate();
   const styles = {
     display: "flex",
@@ -57,7 +57,7 @@ export default function AddNew({ entity, icon }) {
           showUsers={true}
           onClick={(formData) => {
             createRole(formData);
-            nav("/roles")
+            nav("/roles");
           }}
         />
       )}

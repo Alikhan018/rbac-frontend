@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./scss/dropdown.scss";
 
-export default function DropDown({ onDelete }) {
+export default function DropDown({ onDelete, onEdit }) {
   return (
     <div className="dropdown-container">
-      <div>
+      <div onClick={onEdit}>
         Edit
         <FontAwesomeIcon icon={faPen} style={{ color: "blue" }} />
       </div>

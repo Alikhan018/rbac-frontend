@@ -6,7 +6,15 @@ import DropDown from "../../DropDown/DropDown";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Button/Button";
 
-export default function Table({ header, data, onDelete, btnText, onAdd, addBtn }) {
+export default function Table({
+  header,
+  data,
+  onDelete,
+  btnText,
+  onAdd,
+  addBtn,
+  onEdit,
+}) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
 
@@ -14,7 +22,9 @@ export default function Table({ header, data, onDelete, btnText, onAdd, addBtn }
 
   return (
     <div className="table-component-container">
-      {addBtn && <Button text={btnText} type={"submit"} icon={faAdd} onClick={onAdd} />}
+      {addBtn && (
+        <Button text={btnText} type={"submit"} icon={faAdd} onClick={onAdd} />
+      )}
       <div className="table">
         <div className="table-head">
           {keys.map((key, index) => (
@@ -54,7 +64,12 @@ export default function Table({ header, data, onDelete, btnText, onAdd, addBtn }
                         }
                       />
                       {clickedIndex === tupleIndex && (
-                        <DropDown onDelete={() => onDelete(tuple.id)} />
+                        <DropDown
+                          onDelete={() => onDelete(tuple.id)}
+                          onEdit={() => {
+                            onEdit(tuple.id);
+                          }}
+                        />
                       )}
                     </>
                   ) : (

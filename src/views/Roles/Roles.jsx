@@ -34,6 +34,9 @@ export default function Groups() {
       console.log(err);
     }
   };
+  const onEdit = (id) => {
+    navigate("/edit-role");
+  };
   const handleAddClick = () => {
     navigate("/add-new-role");
   };
@@ -47,6 +50,7 @@ export default function Groups() {
             header={headerRoles}
             data={roles}
             onDelete={onDelete}
+            onEdit={onEdit}
             btnText={"Add new role"}
             onAdd={handleAddClick}
             addBtn={true}

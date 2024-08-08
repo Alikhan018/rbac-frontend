@@ -33,6 +33,9 @@ export default function Groups() {
       console.log(err);
     }
   };
+  const onEdit = (id) => {
+    navigate("/edit-group");
+  };
   const handleAddClick = () => {
     navigate("/add-new-group");
   };
@@ -46,7 +49,8 @@ export default function Groups() {
             header={headerGroups}
             data={groups}
             onDelete={onDelete}
-            btnText={"Add new user"}
+            onEdit={onEdit}
+            btnText={"Add new group"}
             onAdd={handleAddClick}
             addBtn={true}
           />

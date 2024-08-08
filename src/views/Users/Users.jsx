@@ -34,6 +34,9 @@ export default function Users() {
       console.log(err);
     }
   };
+  const onEdit = (id) => {
+    navigate("/edit-user");
+  };
   const handleAddClick = () => {
     navigate("/add-new-user");
   };
@@ -47,6 +50,7 @@ export default function Users() {
             header={headerUsers}
             data={users}
             onDelete={onDelete}
+            onEdit={onEdit}
             btnText={"Add new user"}
             onAdd={handleAddClick}
             addBtn={true}

@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import Button from "../Button/Button";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from "../MaterialTable/MT";
-import { v4 as uuidv4 } from "uuid";
 
 export default function Form({
   inputs,
