@@ -1,3 +1,15 @@
+import RolesServices from "../services/roles.services";
+import UserServices from "../services/users.services";
+import GroupServices from "../services/groups.services";
+
+const rs = new RolesServices();
+const us = new UserServices();
+const gs = new GroupServices();
+
+const users = await us.getAllUsers();
+const roles = await rs.getAllRoles();
+const groups = await gs.getAllGroups();
+
 const loginForm = [
   {
     id: "email",
@@ -20,13 +32,14 @@ const loginForm = [
     required: true,
   },
   {
-    id: 3,
+    id: "3",
     type: "submit",
     label: "Login",
     name: "",
     options: {
       type: "button",
     },
+    required: false,
   },
 ];
 
@@ -57,7 +70,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: ["a", "b", "c"],
+      selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -68,14 +81,14 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: ["a", "b", "c"],
+      selectValues: groups.data,
       options: {
         type: "input",
       },
       required: true,
     },
     {
-      id: 3,
+      id: "3",
       type: "submit",
       label: "Create new User",
       name: "",
@@ -100,7 +113,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: ["a", "b", "c"],
+      selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -111,14 +124,14 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: ["a", "b", "c"],
+      selectValues: users.data,
       options: {
         type: "input",
       },
       required: true,
     },
     {
-      id: 3,
+      id: "3",
       type: "submit",
       label: "Create new Group",
       name: "",
@@ -143,7 +156,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: ["a", "b", "c"],
+      selectValues: users.data,
       options: {
         type: "input",
       },
@@ -154,14 +167,14 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: ["a", "b", "c"],
+      selectValues: groups.data,
       options: {
         type: "input",
       },
       required: true,
     },
     {
-      id: 3,
+      id: "3",
       type: "submit",
       label: "Create new Role",
       name: "",

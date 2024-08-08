@@ -2,7 +2,8 @@ import React from "react";
 import { addForm } from "../../props/forms";
 import Form from "../../components/shared/Form/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { alignProperty } from "@mui/material/styles/cssUtils";
+import { createUser } from "../../props/formHandlers"
+
 
 export default function AddNew({ entity, icon }) {
   const styles = {
@@ -27,6 +28,7 @@ export default function AddNew({ entity, icon }) {
           showGroups={true}
           showRoles={true}
           showUsers={false}
+          onClick={createUser}
         />
       )}
       {entity === "group" && (

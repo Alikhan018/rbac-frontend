@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Button from "../Button/Button";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from "../MaterialTable/MT";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Form({
   inputs,
@@ -11,6 +12,8 @@ export default function Form({
   showUsers,
   showGroups,
   showRoles,
+  onClick,
+  Err,
 }) {
   const initialSelected = useMemo(() => {
     if (showRoles) return "roles";
@@ -18,22 +21,37 @@ export default function Form({
     if (showGroups) return "groups";
     return "";
   }, [showUsers, showGroups, showRoles]);
+  const [selectValueMap, setSelectValueMap] = useState({});
+
+  useEffect(() => {
+    const map = {};
+    inputs.forEach(({ selectValues }) => {
+      if (selectValues) {
+        selectValues.forEach(({ id, name }) => {
+          map[name] = id;
+        });
+      }
+    });
+    setSelectValueMap(map);
+  }, [inputs]);
 
   const [selected, setSelected] = useState(initialSelected);
-  const [data, setData] = useState({});
-  const [tableData, setTableData] = useState([]);
-  const [selectValue, setSelectValue] = useState("");
 
-  const inputFields = inputs.filter((input) => input.options.type === "input");
-  const buttons = inputs.filter((input) => input.options.type === "button");
-
-  const initialState = inputFields.reduce((entry, field) => {
-    entry[field.id] = "";
+  // Initialize formData with the necessary keys
+  const initialState = inputs.reduce((entry, field) => {
+    if (field.options.type === "input") {
+      entry[field.id] = "";
+    } else if (["roles", "users", "groups"].includes(field.name)) {
+      entry[field.name] = [];
+    }
     return entry;
   }, {});
 
   const [formData, setFormData] = useState(initialState);
-  const [falseCredentials, setFalseCredentials] = useState(false);
+  const [selectValue, setSelectValue] = useState("");
+
+  const inputFields = inputs.filter((input) => input.options.type === "input");
+  const buttons = inputs.filter((input) => input.options.type === "button");
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -43,50 +61,45 @@ export default function Form({
     }));
   };
 
-  const handleSelectChange = (e, id) => {
+  const handleSelectChange = (e) => {
     const { value } = e.target;
-    setSelectValue(value);
+    const id = selectValueMap[value];
+    setSelectValue({ value, id });
   };
 
-  const handleButtonClick = (id) => {
-    setData((prevData) => ({
-      ...prevData,
-      [id]: [...(prevData[id] || []), selectValue],
+  const handleButtonClick = (name) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: [...prevFormData[name], selectValue],
     }));
-    setTableData(data[id]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic
+    console.log(formData);
+    onClick(formData);
   };
-  useEffect(() => {
-    if (selected) {
-      setTableData(data[selected] || []);
-    }
-  }, [data, selected]);
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form-fields">
-        {falseCredentials && (
-          <div style={{ color: "red" }}>Invalid Credentials!</div>
-        )}
+        {Err && <div style={{ color: "red" }}>Invalid Credentials!</div>}
         {inputFields.map(
           ({ id, type, label, name, selectValues, required }) => {
             if (type === "select" || type === "inputWithBtn") {
               return (
                 <div key={id} className="input-select">
-                  <select
-                    required={required}
-                    name={name}
-                    onChange={(e) => handleSelectChange(e, id)}
-                  >
+                  <select name={name} onChange={handleSelectChange}>
                     <option value="" disabled selected>
                       {label}
                     </option>
-                    {selectValues.map((value, index) => (
-                      <option key={index} value={value}>
-                        {value}
+                    {selectValues.map((value) => (
+                      <option
+                        key={value.id}
+                        value={value.name || value.email}
+                        data-id={value.id}
+                      >
+                        {value.name || value.email}
                       </option>
                     ))}
                   </select>
@@ -121,36 +134,9 @@ export default function Form({
       {type === "add/update" && (
         <div className="table-view">
           <div className="form-nav">
-            {showRoles && (
-              <p
-                onClick={() => {
-                  setSelected("roles");
-                  setTableData(data["roles"] || []);
-                }}
-              >
-                Roles
-              </p>
-            )}
-            {showUsers && (
-              <p
-                onClick={() => {
-                  setSelected("users");
-                  setTableData(data["users"] || []);
-                }}
-              >
-                Users
-              </p>
-            )}
-            {showGroups && (
-              <p
-                onClick={() => {
-                  setSelected("groups");
-                  setTableData(data["groups"] || []);
-                }}
-              >
-                Groups
-              </p>
-            )}
+            {showRoles && <p onClick={() => setSelected("roles")}>Roles</p>}
+            {showUsers && <p onClick={() => setSelected("users")}>Users</p>}
+            {showGroups && <p onClick={() => setSelected("groups")}>Groups</p>}
             {(showGroups || showRoles || showUsers) && (
               <div
                 className={`${
@@ -160,7 +146,17 @@ export default function Form({
             )}
           </div>
           <div>
-            <BasicTable rows={tableData} />
+            <BasicTable
+              rows={formData[selected]}
+              onDelete={(id) => {
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  [selected]: prevFormData[selected].filter(
+                    (item) => item.id !== id
+                  ),
+                }));
+              }}
+            />
           </div>
         </div>
       )}
@@ -179,7 +175,7 @@ export default function Form({
 Form.propTypes = {
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,

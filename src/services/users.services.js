@@ -41,4 +41,24 @@ export default class UserServices {
       return err;
     }
   }
+
+  async create(user) {
+    const { email, password, roles, groups } = user;
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.post(`${this.baseUrl}/users/create`, {
+        email,
+        password,
+        roles,
+        groups,
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 }
