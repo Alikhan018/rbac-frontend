@@ -1,0 +1,111 @@
+:root {
+  --blue: #0039a6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  justify-content: center;
+  gap: 15px;
+}
+.form .form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form .form-fields .input-select {
+  display: flex;
+  width: 100%;
+}
+.form .form-fields .input-select select {
+  width: 240px;
+}
+.form .form-fields .input {
+  display: flex;
+  flex-direction: column;
+}
+.form .form-fields .input-select {
+  display: flex;
+  gap: 3px;
+  width: 100%;
+}
+.form .form-fields .input input {
+  padding: 5px 5px 0px 5px;
+  height: 43px;
+  width: 100%;
+}
+.form .form-fields .input input:focus, .form .form-fields .input input:valid {
+  outline: none;
+  border: 1px solid var(--blue);
+}
+.form .form-fields .input input + label {
+  position: relative;
+  top: -39px;
+  left: 10px;
+  transition: 0.2s;
+}
+.form .form-fields .input input:focus + label, .form .form-fields .input input:valid + label {
+  top: -49px;
+  left: 7px;
+  width: 150px;
+  font-size: 11px;
+  color: var(--blue);
+  background-color: white;
+}
+.form .form-fields .input select {
+  width: 240px;
+}
+.form .form-nav {
+  display: flex;
+  gap: 20px;
+}
+.form .form-nav p {
+  cursor: pointer;
+  font-size: 18px;
+}
+.form .form-nav p:hover {
+  color: var(--blue);
+}
+.form .form-nav .underline-roles {
+  position: relative;
+  top: 25px;
+  left: -135px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.form .form-nav .underline-groups {
+  position: relative;
+  top: 25px;
+  left: -76px;
+  width: 60px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.form .form-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+.form .form-buttons button {
+  width: 300px;
+  padding: 10px 5px;
+  background-color: var(--blue);
+  border-radius: 5px;
+  border: 1px solid var(--blue);
+  cursor: pointer;
+  color: white;
+}
+.form .form-buttons button:hover {
+  background-color: #022e81;
+}
+.form .form-buttons a {
+  color: var(--blue);
+  font-size: 14px;
+}
+.form .input-with-btn {
+  display: flex;
+  width: 100%;
+}/*# sourceMappingURL=form.css.map */

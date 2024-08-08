@@ -54,9 +54,20 @@ const addForm = {
     },
     {
       id: "roles",
-      type: "select",
+      type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
+      selectValues: ["a", "b", "c"],
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
+      id: "groups",
+      type: "inputWithBtn",
+      label: "Select Groups",
+      name: "groups",
       selectValues: ["a", "b", "c"],
       options: {
         type: "input",

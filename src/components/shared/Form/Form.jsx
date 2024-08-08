@@ -1,11 +1,15 @@
-import "./form.css";
+import "./scss/form.css";
 import React, { useState } from "react";
 import UserServices from "../../../services/users.services";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Table from "../Table/Table";
+import Button from "../Button/Button";
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
 
-export default function Form({ inputs }) {
+export default function Form({ inputs, type }) {
+  const [selected, setSelected] = useState("");
+
   const navigate = useNavigate();
   const inputFields = inputs.filter((input) => {
     return input.options.type === "input";
@@ -26,21 +30,7 @@ export default function Form({ inputs }) {
       [id]: value,
     }));
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const us = new UserServices();
-    try {
-      const response = await us.login(formData);
-      if (response.message === "logged in") {
-        setFalseCredentials(false);
-        navigate("home");
-      } else {
-        setFalseCredentials(true);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const handleSubmit = async (e) => {};
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form-fields">
@@ -49,10 +39,10 @@ export default function Form({ inputs }) {
         )}
         {inputFields.map(
           ({ id, type, label, name, selectValues, required }) => {
-            if (type === "select") {
+            if (type === "select" || type === "inputWithBtn") {
               return (
-                <div key={id} className="input">
-                  <select required={required} name={name}>
+                <div key={id} className="input-select">
+                  <select required={required} name={name} defaultValue={label}>
                     {label}
                     {selectValues.map((value, index) => {
                       return (
@@ -62,6 +52,12 @@ export default function Form({ inputs }) {
                       );
                     })}
                   </select>
+                  <Button
+                    text={"Add"}
+                    type={"submit"}
+                    onClick={() => {}}
+                    icon={faAdd}
+                  />
                 </div>
               );
             }
@@ -83,7 +79,32 @@ export default function Form({ inputs }) {
           }
         )}
       </div>
-      {/* <Table addBtn={false} /> */}
+
+      {type === "add/update" && (
+        <div>
+          <div className="form-nav">
+            <p
+              onClick={() => {
+                setSelected("roles");
+              }}
+            >
+              Roles
+            </p>
+            <p
+              onClick={() => {
+                setSelected("groups");
+              }}
+            >
+              Groups
+            </p>
+            <div
+              className={`${
+                selected === "groups" ? `underline-groups` : `underline-roles`
+              }`}
+            ></div>
+          </div>
+        </div>
+      )}
       <div className="form-buttons">
         {buttons.map((button) => (
           <button key={button.id} type={button.type}>

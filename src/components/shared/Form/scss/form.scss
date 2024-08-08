@@ -1,0 +1,120 @@
+:root {
+  --blue: #0039a6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  justify-content: center;
+  gap: 15px;
+
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .input-select {
+      display: flex;
+      width: 100%;
+      select {
+        width: 240px;
+      }
+    }
+    .input {
+      display: flex;
+      flex-direction: column;
+
+      &-select {
+        display: flex;
+        gap: 3px;
+        width: 100%;
+      }
+
+      input {
+        padding: 5px 5px 0px 5px;
+        height: 43px;
+        width: 100%;
+        &:focus,
+        &:valid {
+          outline: none;
+          border: 1px solid var(--blue);
+        }
+        + label {
+          position: relative;
+          top: -39px;
+          left: 10px;
+          transition: 0.2s;
+        }
+        &:focus + label,
+        &:valid + label {
+          top: -49px;
+          left: 7px;
+          width: 150px;
+          font-size: 11px;
+          color: var(--blue);
+          background-color: white;
+        }
+      }
+
+      select {
+        width: 240px;
+      }
+    }
+  }
+  .form-nav {
+    display: flex;
+    gap: 20px;
+    p {
+      cursor: pointer;
+      font-size: 18px;
+      &:hover {
+        color: var(--blue);
+      }
+    }
+    .underline-roles {
+      position: relative;
+      top: 25px;
+      left: -135px;
+      width: 40px;
+      height: 0px;
+      border: 1px solid var(--blue);
+    }
+    .underline-groups {
+      position: relative;
+      top: 25px;
+      left: -76px;
+      width: 60px;
+      height: 0px;
+      border: 1px solid var(--blue);
+    }
+  }
+  .form-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+
+    button {
+      width: 300px;
+      padding: 10px 5px;
+      background-color: var(--blue);
+      border-radius: 5px;
+      border: 1px solid var(--blue);
+      cursor: pointer;
+      color: white;
+      &:hover {
+        background-color: #022e81;
+      }
+    }
+
+    a {
+      color: var(--blue);
+      font-size: 14px;
+    }
+  }
+
+  .input-with-btn {
+    display: flex;
+    width: 100%;
+  }
+}
