@@ -6,11 +6,6 @@ import { alignProperty } from "@mui/material/styles/cssUtils";
 
 export default function AddNew({ entity, icon }) {
   const styles = {
-    width: "350px",
-    position: "fixed",
-    top: "45%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -25,7 +20,33 @@ export default function AddNew({ entity, icon }) {
         <FontAwesomeIcon icon={icon} style={{ paddingRight: "10px" }} />
         Create new {entity}
       </h3>
-      <Form inputs={addForm[entity]} type={"add/update"} />
+      {entity === "user" && (
+        <Form
+          inputs={addForm[entity]}
+          type={"add/update"}
+          showGroups={true}
+          showRoles={true}
+          showUsers={false}
+        />
+      )}
+      {entity === "group" && (
+        <Form
+          inputs={addForm[entity]}
+          type={"add/update"}
+          showGroups={false}
+          showRoles={true}
+          showUsers={true}
+        />
+      )}
+      {entity === "role" && (
+        <Form
+          inputs={addForm[entity]}
+          type={"add/update"}
+          showGroups={true}
+          showRoles={false}
+          showUsers={true}
+        />
+      )}
     </div>
   );
 }

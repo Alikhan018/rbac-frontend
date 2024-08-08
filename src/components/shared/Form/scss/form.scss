@@ -5,7 +5,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 500px;
   justify-content: center;
   gap: 15px;
 
@@ -26,14 +26,17 @@
 
       &-select {
         display: flex;
-        gap: 3px;
+        gap: 10px;
         width: 100%;
+        select {
+          width: 430px;
+        }
       }
 
       input {
         padding: 5px 5px 0px 5px;
         height: 43px;
-        width: 100%;
+        width: 495 px;
         &:focus,
         &:valid {
           outline: none;
@@ -55,11 +58,12 @@
           background-color: white;
         }
       }
-
-      select {
-        width: 240px;
-      }
     }
+  }
+  .table-view {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   .form-nav {
     display: flex;
@@ -95,7 +99,7 @@
     gap: 5px;
 
     button {
-      width: 300px;
+      width: 200px;
       padding: 10px 5px;
       background-color: var(--blue);
       border-radius: 5px;

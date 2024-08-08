@@ -96,6 +96,28 @@ const addForm = {
       required: true,
     },
     {
+      id: "roles",
+      type: "inputWithBtn",
+      label: "Select Roles",
+      name: "roles",
+      selectValues: ["a", "b", "c"],
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
+      id: "users",
+      type: "inputWithBtn",
+      label: "Select Users",
+      name: "users",
+      selectValues: ["a", "b", "c"],
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
       id: 3,
       type: "submit",
       label: "Create new Group",
@@ -111,6 +133,28 @@ const addForm = {
       type: "text",
       label: "Enter Role Name",
       name: "name",
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
+      id: "users",
+      type: "inputWithBtn",
+      label: "Select Users",
+      name: "users",
+      selectValues: ["a", "b", "c"],
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
+      id: "groups",
+      type: "inputWithBtn",
+      label: "Select Groups",
+      name: "groups",
+      selectValues: ["a", "b", "c"],
       options: {
         type: "input",
       },

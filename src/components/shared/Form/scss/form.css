@@ -5,7 +5,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 500px;
   justify-content: center;
   gap: 15px;
 }
@@ -27,13 +27,16 @@
 }
 .form .form-fields .input-select {
   display: flex;
-  gap: 3px;
+  gap: 10px;
   width: 100%;
+}
+.form .form-fields .input-select select {
+  width: 430px;
 }
 .form .form-fields .input input {
   padding: 5px 5px 0px 5px;
   height: 43px;
-  width: 100%;
+  width: 495 px;
 }
 .form .form-fields .input input:focus, .form .form-fields .input input:valid {
   outline: none;
@@ -53,8 +56,10 @@
   color: var(--blue);
   background-color: white;
 }
-.form .form-fields .input select {
-  width: 240px;
+.form .table-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .form .form-nav {
   display: flex;
@@ -90,7 +95,7 @@
   gap: 5px;
 }
 .form .form-buttons button {
-  width: 300px;
+  width: 200px;
   padding: 10px 5px;
   background-color: var(--blue);
   border-radius: 5px;
