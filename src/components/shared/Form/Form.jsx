@@ -27,8 +27,8 @@ export default function Form({
     const map = {};
     inputs.forEach(({ selectValues }) => {
       if (selectValues) {
-        selectValues.forEach(({ id, name }) => {
-          map[name] = id;
+        selectValues.forEach(({ id, name, email }) => {
+          map[name || email] = id;
         });
       }
     });
@@ -37,7 +37,6 @@ export default function Form({
 
   const [selected, setSelected] = useState(initialSelected);
 
-  // Initialize formData with the necessary keys
   const initialState = inputs.reduce((entry, field) => {
     if (field.options.type === "input") {
       entry[field.id] = "";
@@ -64,6 +63,7 @@ export default function Form({
   const handleSelectChange = (e) => {
     const { value } = e.target;
     const id = selectValueMap[value];
+    console.log(id, value, e.target);
     setSelectValue({ value, id });
   };
 
@@ -93,12 +93,8 @@ export default function Form({
                     <option value="" disabled selected>
                       {label}
                     </option>
-                    {selectValues.map((value) => (
-                      <option
-                        key={value.id}
-                        value={value.name || value.email}
-                        data-id={value.id}
-                      >
+                    {selectValues.map((value, index) => (
+                      <option key={index} value={value.name || value.email}>
                         {value.name || value.email}
                       </option>
                     ))}

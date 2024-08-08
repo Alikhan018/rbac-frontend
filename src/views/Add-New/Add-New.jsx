@@ -2,10 +2,11 @@ import React from "react";
 import { addForm } from "../../props/forms";
 import Form from "../../components/shared/Form/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createUser } from "../../props/formHandlers"
-
+import { createUser, createGroup } from "../../props/formHandlers";
+import { useNavigate } from "react-router-dom";
 
 export default function AddNew({ entity, icon }) {
+  const nav = useNavigate();
   const styles = {
     display: "flex",
     flexDirection: "column",
@@ -28,7 +29,10 @@ export default function AddNew({ entity, icon }) {
           showGroups={true}
           showRoles={true}
           showUsers={false}
-          onClick={createUser}
+          onClick={(formData) => {
+            createUser(formData);
+            nav("/users");
+          }}
         />
       )}
       {entity === "group" && (
@@ -38,6 +42,10 @@ export default function AddNew({ entity, icon }) {
           showGroups={false}
           showRoles={true}
           showUsers={true}
+          onClick={(formData) => {
+            createGroup(formData);
+            nav("/groups");
+          }}
         />
       )}
       {entity === "role" && (

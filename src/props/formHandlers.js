@@ -3,12 +3,12 @@ import RolesServices from "../services/roles.services";
 import GroupServices from "../services/groups.services";
 
 export const createUser = async (userData) => {
+  console.log(userData);
   const us = new UserServices();
-  const res = await us.create(userData);
-  console.log(res);
+  await us.create(userData);
 };
 
-export const createGroup = async(groupData) => {
-    const rs = new RolesServices();
-    const res = await rs.create(groupData);
-}
+export const createGroup = async (groupData) => {
+  const gs = new GroupServices();
+  await gs.create(groupData);
+};

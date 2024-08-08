@@ -28,7 +28,8 @@ export default function Users() {
     const us = new UserServices();
     try {
       us.deleteUser(id);
-      window.location.reload();
+      const filter = users.filter((user) => user.id !== id);
+      setUsers(filter);
     } catch (err) {
       console.log(err);
     }
