@@ -68,6 +68,22 @@
   .form-nav {
     display: flex;
     gap: 20px;
+    .underline-roles-two {
+      position: relative;
+      top: 25px;
+      left: -125px;
+      width: 40px;
+      height: 0px;
+      border: 1px solid var(--blue);
+    }
+    .underline-users {
+      position: relative;
+      top: 25px;
+      left: -63px;
+      width: 40px;
+      height: 0px;
+      border: 1px solid var(--blue);
+    }
     p {
       cursor: pointer;
       font-size: 18px;
@@ -75,6 +91,7 @@
         color: var(--blue);
       }
     }
+
     .underline-roles {
       position: relative;
       top: 25px;

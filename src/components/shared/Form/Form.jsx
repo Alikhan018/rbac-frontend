@@ -85,10 +85,23 @@ export default function Form({
   };
 
   const handleButtonClick = (name) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: [...prevFormData[name], selectValue],
-    }));
+    if (
+      selectValue === "Select Roles" ||
+      selectValue === "Select Groups" ||
+      selectValue === "Select Users"
+    ) {
+      return;
+    }
+    setFormData((prevFormData) => {
+      const existingEntries = prevFormData[name] || [];
+      if (existingEntries.some((entry) => entry.id === selectValue.id)) {
+        return prevFormData;
+      }
+      return {
+        ...prevFormData,
+        [name]: [...existingEntries, selectValue],
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -159,10 +172,19 @@ export default function Form({
             {showRoles && <p onClick={() => setSelected("roles")}>Roles</p>}
             {showUsers && <p onClick={() => setSelected("users")}>Users</p>}
             {showGroups && <p onClick={() => setSelected("groups")}>Groups</p>}
-            {(showGroups || showRoles || showUsers) && (
+            {((showGroups && showRoles) || (showUsers && showGroups)) && (
               <div
                 className={`${
                   selected === "groups" ? `underline-groups` : `underline-roles`
+                }`}
+              ></div>
+            )}
+            {showRoles && showUsers && (
+              <div
+                className={`${
+                  selected === "roles"
+                    ? `underline-roles-two`
+                    : `underline-users`
                 }`}
               ></div>
             )}

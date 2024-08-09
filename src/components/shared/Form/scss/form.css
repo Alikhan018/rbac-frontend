@@ -65,6 +65,22 @@
   display: flex;
   gap: 20px;
 }
+.form .form-nav .underline-roles-two {
+  position: relative;
+  top: 25px;
+  left: -125px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.form .form-nav .underline-users {
+  position: relative;
+  top: 25px;
+  left: -63px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
 .form .form-nav p {
   cursor: pointer;
   font-size: 18px;
