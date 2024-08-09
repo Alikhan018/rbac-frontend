@@ -21,15 +21,39 @@ function App() {
             <Route path="roles" element={<Roles />} />
             <Route
               path="add-new-user"
-              element={<AddUpdate entity={"user"} icon={faUser} />}
+              element={<AddUpdate entity={"user"} icon={faUser} task={"add"} />}
             />
             <Route
               path="add-new-group"
-              element={<AddUpdate entity={"group"} icon={faUserGroup} />}
+              element={
+                <AddUpdate entity={"group"} icon={faUserGroup} task={"add"} />
+              }
             />
             <Route
               path="add-new-role"
-              element={<AddUpdate entity={"role"} icon={faGear} />}
+              element={<AddUpdate entity={"role"} icon={faGear} task={"add"} />}
+            />
+            <Route
+              path="edit-role"
+              element={
+                <AddUpdate entity={"role"} icon={faGear} task={"update"} />
+              }
+            />
+            <Route
+              path="edit-user"
+              element={
+                <AddUpdate entity={"user"} icon={faUser} task={"update"} />
+              }
+            />
+            <Route
+              path="edit-group"
+              element={
+                <AddUpdate
+                  entity={"group"}
+                  icon={faUserGroup}
+                  task={"update"}
+                />
+              }
             />
           </Route>
         </Routes>

@@ -43,10 +43,25 @@ export default class GroupServices {
         users,
         features,
       });
-      console.log(response.data);
       return response.data;
     } catch (err) {
-      console.log(err);
+      return err;
+    }
+  }
+  async update(data) {
+    const { id, name, roles, users, features } = data;
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.put(`${this.baseUrl}/groups/${id}/update`, {
+        name,
+        roles,
+        users,
+        features,
+      });
+      return response.data;
+    } catch (err) {
       return err;
     }
   }

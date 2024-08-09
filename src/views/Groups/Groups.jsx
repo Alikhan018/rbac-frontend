@@ -34,7 +34,7 @@ export default function Groups() {
     }
   };
   const onEdit = (id) => {
-    navigate("/edit-group");
+    navigate("/edit-group", { state: { id } });
   };
   const handleAddClick = () => {
     navigate("/add-new-group");

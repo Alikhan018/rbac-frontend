@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 import Button from "../Button/Button";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from "../MaterialTable/MT";
+import { useLocation } from "react-router-dom";
+import { fetchEntity } from "../../../services/index.services";
 
 export default function Form({
+  task,
   inputs,
   type,
   showUsers,
@@ -21,6 +24,8 @@ export default function Form({
     return "";
   }, [showUsers, showGroups, showRoles]);
   const [selectValueMap, setSelectValueMap] = useState({});
+  const location = useLocation();
+  const { id } = location.state || {};
 
   useEffect(() => {
     const map = {};
@@ -44,6 +49,19 @@ export default function Form({
     }
     return entry;
   }, {});
+
+  useEffect(() => {
+    if (task === "update") {
+      const fetchData = async () => {
+        const data = await fetchEntity(showUsers, showGroups, showRoles, id);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ...data,
+        }));
+      };
+      fetchData();
+    }
+  }, [task, showUsers, showGroups, showRoles]);
 
   const [formData, setFormData] = useState(initialState);
   const [selectValue, setSelectValue] = useState("");
@@ -85,11 +103,20 @@ export default function Form({
         {Err && <div style={{ color: "red" }}>Invalid Credentials!</div>}
         {inputFields.map(
           ({ id, type, label, name, selectValues, required }) => {
+            if (task === "update" && type === "password") {
+              return;
+            }
+            const inputValue = formData[id] || ""; // Get value from formData
+
             if (type === "select" || type === "inputWithBtn") {
               return (
                 <div key={id} className="input-select">
-                  <select name={name} onChange={handleSelectChange}>
-                    <option value="" disabled selected>
+                  <select
+                    name={name}
+                    onChange={handleSelectChange}
+                    value={selectValue.value || ""}
+                  >
+                    <option value="" disabled>
                       {label}
                     </option>
                     {selectValues.map((value, index) => (
@@ -113,7 +140,7 @@ export default function Form({
                   name={name}
                   id={id}
                   type={type}
-                  value={formData[id]}
+                  value={inputValue}
                   onChange={handleChange}
                   required={required}
                 />

@@ -28,7 +28,7 @@ export default function BasicTable({ rows, onDelete }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.value}
+                  {row.value || row.name || row.email}
                 </TableCell>
                 <TableCell align="right">
                   <FontAwesomeIcon

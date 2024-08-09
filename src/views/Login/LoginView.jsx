@@ -24,6 +24,7 @@ export default function LoginView() {
   return (
     <div className="container">
       <Form
+      task={"login"}
         Err={err}
         inputs={loginForm}
         type={"login"}

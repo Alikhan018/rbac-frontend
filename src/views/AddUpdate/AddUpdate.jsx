@@ -1,11 +1,18 @@
 import React from "react";
-import { addForm } from "../../props/forms";
+import { addForm, updateForm } from "../../props/forms";
 import Form from "../../components/shared/Form/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createUser, createGroup, createRole } from "../../props/formHandlers";
+import {
+  createUser,
+  updateUser,
+  createGroup,
+  createRole,
+  updateGroup,
+  updateRole,
+} from "../../props/formHandlers";
 import { useNavigate } from "react-router-dom";
 
-export default function AddUpdate({ entity, icon }) {
+export default function AddUpdate({ entity, icon, task }) {
   const nav = useNavigate();
   const styles = {
     display: "flex",
@@ -18,45 +25,48 @@ export default function AddUpdate({ entity, icon }) {
   };
   return (
     <div style={styles}>
-      <h3>
+      <h3 style={{ textTransform: "uppercase" }}>
         <FontAwesomeIcon icon={icon} style={{ paddingRight: "10px" }} />
-        Create new {entity}
+        {task} {entity}
       </h3>
       {entity === "user" && (
         <Form
-          inputs={addForm[entity]}
+          task={task}
+          inputs={task === "update" ? updateForm[entity] : addForm[entity]}
           type={"add/update"}
           showGroups={true}
           showRoles={true}
           showUsers={false}
           onClick={(formData) => {
-            createUser(formData);
+            task === "update" ? updateUser(formData) : createUser(formData);
             nav("/users");
           }}
         />
       )}
       {entity === "group" && (
         <Form
-          inputs={addForm[entity]}
+          task={task}
+          inputs={task === "update" ? updateForm[entity] : addForm[entity]}
           type={"add/update"}
           showGroups={false}
           showRoles={true}
           showUsers={true}
           onClick={(formData) => {
-            createGroup(formData);
+            task === "update" ? updateGroup(formData) : createGroup(formData);
             nav("/groups");
           }}
         />
       )}
       {entity === "role" && (
         <Form
-          inputs={addForm[entity]}
+          task={task}
+          inputs={task === "update" ? updateForm[entity] : addForm[entity]}
           type={"add/update"}
           showGroups={true}
           showRoles={false}
           showUsers={true}
           onClick={(formData) => {
-            createRole(formData);
+            task === "update" ? updateRole(formData) : createRole(formData);
             nav("/roles");
           }}
         />

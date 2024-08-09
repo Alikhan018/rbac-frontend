@@ -232,7 +232,7 @@ const updateForm = {
     {
       id: "3",
       type: "submit",
-      label: "Create new User",
+      label: "Update!",
       name: "",
       options: {
         type: "button",
@@ -275,7 +275,7 @@ const updateForm = {
     {
       id: "3",
       type: "submit",
-      label: "Create new Group",
+      label: "Update!",
       name: "",
       options: {
         type: "button",
@@ -318,7 +318,7 @@ const updateForm = {
     {
       id: "3",
       type: "submit",
-      label: "Create new Role",
+      label: "Update!",
       name: "",
       options: {
         type: "button",

@@ -35,7 +35,7 @@ export default function Users() {
     }
   };
   const onEdit = (id) => {
-    navigate("/edit-user");
+    navigate("/edit-user", { state: { id } });
   };
   const handleAddClick = () => {
     navigate("/add-new-user");

@@ -35,7 +35,7 @@ export default function Groups() {
     }
   };
   const onEdit = (id) => {
-    navigate("/edit-role");
+    navigate("/edit-role", {state: {id}});
   };
   const handleAddClick = () => {
     navigate("/add-new-role");
