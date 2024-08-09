@@ -10,7 +10,6 @@ export default class GroupServices {
         throw new Error("Base URL is not defined");
       }
       const response = await axios.get(`${this.baseUrl}/groups`);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);

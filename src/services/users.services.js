@@ -21,7 +21,6 @@ export default class UserServices {
         throw new Error("Base URL is not defined");
       }
       const response = await axios.get(`${this.baseUrl}/users`);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -34,7 +33,6 @@ export default class UserServices {
         throw new Error("Base URL is not defined");
       }
       const response = await axios.delete(`${this.baseUrl}/users/${id}/delete`);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -54,7 +52,6 @@ export default class UserServices {
         roles,
         groups,
       });
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -62,6 +59,7 @@ export default class UserServices {
     }
   }
   async update(user) {
+    console.log(user);
     const { id, email, roles, groups } = user;
     try {
       if (!this.baseUrl) {
@@ -72,7 +70,6 @@ export default class UserServices {
         roles,
         groups,
       });
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);

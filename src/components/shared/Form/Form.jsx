@@ -23,6 +23,7 @@ export default function Form({
     if (showGroups) return "groups";
     return "";
   }, [showUsers, showGroups, showRoles]);
+
   const [selectValueMap, setSelectValueMap] = useState({});
   const location = useLocation();
   const { id } = location.state || {};
@@ -61,10 +62,11 @@ export default function Form({
       };
       fetchData();
     }
-  }, [task, showUsers, showGroups, showRoles]);
+  }, [task, showUsers, showGroups, showRoles, id]);
 
   const [formData, setFormData] = useState(initialState);
-  const [selectValue, setSelectValue] = useState("");
+  const [selectValues, setSelectValues] = useState({});
+  const [tableData, setTableData] = useState({}); // Initialize with an empty object
 
   const inputFields = inputs.filter((input) => input.options.type === "input");
   const buttons = inputs.filter((input) => input.options.type === "button");
@@ -77,18 +79,26 @@ export default function Form({
     }));
   };
 
-  const handleSelectChange = (e) => {
+  const handleSelectChange = (name) => (e) => {
     const { value } = e.target;
     const id = selectValueMap[value];
-    console.log(id, value, e.target);
-    setSelectValue({ value, id });
+    setSelectValues((prevSelectValues) => ({
+      ...prevSelectValues,
+      [name]: { value, id },
+    }));
+    setTableData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleButtonClick = (name) => {
+    const selectValue = selectValues[name];
     if (
-      selectValue === "Select Roles" ||
-      selectValue === "Select Groups" ||
-      selectValue === "Select Users"
+      !selectValue ||
+      selectValue.value === "Select Roles" ||
+      selectValue.value === "Select Groups" ||
+      selectValue.value === "Select Users"
     ) {
       return;
     }
@@ -106,7 +116,6 @@ export default function Form({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     onClick(formData);
   };
 
@@ -115,18 +124,22 @@ export default function Form({
       <div className="form-fields">
         {Err && <div style={{ color: "red" }}>Invalid Credentials!</div>}
         {inputFields.map(
-          ({ id, type, label, name, selectValues, required }) => {
+          ({ id, type, label, name, selectValues = [], required }) => {
             if (task === "update" && type === "password") {
-              return;
+              return "";
             }
-            const inputValue = formData[id] || ""; // Get value from formData
+            const inputValue = formData[id] || "";
+            const selectValue =
+              selectValues.find(
+                (value) => value.id === selectValues[name]?.id
+              ) || {};
 
             if (type === "select" || type === "inputWithBtn") {
               return (
                 <div key={id} className="input-select">
                   <select
                     name={name}
-                    onChange={handleSelectChange}
+                    onChange={handleSelectChange(name)}
                     value={selectValue.value || ""}
                   >
                     <option value="" disabled>
@@ -191,7 +204,7 @@ export default function Form({
           </div>
           <div>
             <BasicTable
-              rows={formData[selected]}
+              rows={formData[selected] || []} // Ensure formData[selected] is an array
               onDelete={(id) => {
                 setFormData((prevFormData) => ({
                   ...prevFormData,
@@ -223,7 +236,13 @@ Form.propTypes = {
       label: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      selectValues: PropTypes.arrayOf(PropTypes.string),
+      selectValues: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string,
+          email: PropTypes.string,
+        })
+      ),
       options: PropTypes.shape({
         type: PropTypes.string.isRequired,
       }).isRequired,

@@ -22,7 +22,6 @@ export default class RolesServices {
         throw new Error("Base URL is not defined");
       }
       const response = await axios.delete(`${this.baseUrl}/roles/${id}/delete`);
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -41,7 +40,6 @@ export default class RolesServices {
         users,
         features,
       });
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
@@ -60,7 +58,6 @@ export default class RolesServices {
         users,
         features,
       });
-      console.log(response.data);
       return response.data;
     } catch (err) {
       console.log(err);
