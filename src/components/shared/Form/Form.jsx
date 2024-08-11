@@ -9,6 +9,8 @@ import { fetchEntity } from "../../../services/index.services";
 import RolesServices from "../../../services/roles.services";
 import UserServices from "../../../services/users.services";
 import GroupServices from "../../../services/groups.services";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 export default function Form({
   task,
@@ -20,6 +22,7 @@ export default function Form({
   onClick,
   Err,
 }) {
+  const isOptionEqualToValue = (option, value) => option.id === value.id;
   const initialSelected = useMemo(() => {
     if (showRoles) return "roles";
     if (showUsers) return "users";
@@ -130,33 +133,44 @@ export default function Form({
     }));
   };
 
-  const handleSelectChange = (name) => (e) => {
-    const { value, name } = e.target;
+  const handleSelectChange = (name) => (event, newValue) => {
+    if (!newValue) return;
+
+    console.log(newValue);
+    const value = newValue.name || newValue.email || "";
     const id = selectValueMap[value];
+
     if (id !== undefined) {
       setSelectValues((prevSelectValues) => ({
         ...prevSelectValues,
-        [name]: { value, id },
+        [name]: prevSelectValues[name].find((item) => item.id === id)
+          ? prevSelectValues[name]
+          : [...prevSelectValues[name], { value, id }],
       }));
     }
+    console.log(selectValues);
   };
 
   const handleButtonClick = (name) => {
     const selectValue = selectValues[name];
-    if (!selectValue || !selectValue.value) {
+    if (!selectValue || selectValue.length === 0) {
       return;
     }
 
     setFormData((prevFormData) => {
       const existingEntries = prevFormData[name] || [];
-      if (existingEntries.some((entry) => entry.id === selectValue.id)) {
-        return prevFormData;
-      }
+      const newEntries = selectValue.filter(
+        (entry) => !existingEntries.some((e) => e.id === entry.id)
+      );
       return {
         ...prevFormData,
-        [name]: [...existingEntries, selectValue],
+        [name]: [...existingEntries, ...newEntries],
       };
     });
+    setSelectValues((prevSelectValues) => ({
+      ...prevSelectValues,
+      [name]: [],
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -182,25 +196,21 @@ export default function Form({
                 : [];
               return (
                 <div key={id} className="input-select">
-                  <select
-                    name={name}
+                  <Autocomplete
+                    disablePortal
+                    id={id}
+                    options={optionsList}
+                    sx={{ width: 430 }}
+                    getOptionLabel={(option) =>
+                      option.name || option.email || ""
+                    }
+                    value={selectValue || []}
                     onChange={handleSelectChange(name)}
-                    value={selectValue}
-                  >
-                    <option value="" disabled>
-                      {label}
-                    </option>
-                    {optionsList &&
-                      optionsList.map((value, index) => (
-                        <option
-                          key={index}
-                          id={id}
-                          value={value.name || value.email}
-                        >
-                          {value.name || value.email}
-                        </option>
-                      ))}
-                  </select>
+                    isOptionEqualToValue={isOptionEqualToValue}
+                    renderInput={(params) => (
+                      <TextField {...params} label={label} variant="outlined" />
+                    )}
+                  />
                   <Button
                     text={"Add"}
                     type={"button"}
@@ -282,10 +292,9 @@ Form.propTypes = {
       options: PropTypes.shape({
         type: PropTypes.string.isRequired,
       }).isRequired,
-      required: PropTypes.bool.isRequired,
     })
   ).isRequired,
-  type: PropTypes.string.isRequired,
+  type: PropTypes.string,
   showUsers: PropTypes.bool,
   showGroups: PropTypes.bool,
   showRoles: PropTypes.bool,

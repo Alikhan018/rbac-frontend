@@ -12,6 +12,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  cursor: pointer;
+}
+.layout .card:hover {
+  color: #0039a6;
 }
 .layout .card .upper-card {
   display: flex;
