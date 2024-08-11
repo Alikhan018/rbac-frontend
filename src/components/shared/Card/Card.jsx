@@ -12,7 +12,7 @@ export default function Card({ entity }) {
   const [number, setNumber] = useState(0);
   useEffect(() => {
     const getCount = async () => {
-      if (entity.name === "Userss") {
+      if (entity.name === "Users") {
         const us = new UserServices();
         setNumber(await us.count());
       }
