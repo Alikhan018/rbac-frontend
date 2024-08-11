@@ -1,14 +1,6 @@
-import RolesServices from "../services/roles.services";
-import UserServices from "../services/users.services";
-import GroupServices from "../services/groups.services";
 
-const rs = new RolesServices();
-const us = new UserServices();
-const gs = new GroupServices();
 
-const users = await us.getAllUsers();
-const roles = await rs.getAllRoles();
-const groups = await gs.getAllGroups();
+
 
 const loginForm = [
   {
@@ -70,7 +62,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: roles.data,
+      // selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -81,7 +73,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: groups.data,
+      // selectValues: groups.data,
       options: {
         type: "input",
       },
@@ -113,7 +105,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: roles.data,
+      // selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -124,7 +116,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: users.data,
+      // selectValues: users.data,
       options: {
         type: "input",
       },
@@ -156,7 +148,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: users.data,
+      // selectValues: users.data,
       options: {
         type: "input",
       },
@@ -167,7 +159,7 @@ const addForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: groups.data,
+      // selectValues: groups.data,
       options: {
         type: "input",
       },
@@ -212,7 +204,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: roles.data,
+      // selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -223,7 +215,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: groups.data,
+      // selectValues: groups.data,
       options: {
         type: "input",
       },
@@ -255,7 +247,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Roles",
       name: "roles",
-      selectValues: roles.data,
+      // selectValues: roles.data,
       options: {
         type: "input",
       },
@@ -266,7 +258,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: users.data,
+      // selectValues: users.data,
       options: {
         type: "input",
       },
@@ -298,7 +290,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Users",
       name: "users",
-      selectValues: users.data,
+      // selectValues: users.data,
       options: {
         type: "input",
       },
@@ -309,7 +301,7 @@ const updateForm = {
       type: "inputWithBtn",
       label: "Select Groups",
       name: "groups",
-      selectValues: groups.data,
+      // selectValues: groups.data,
       options: {
         type: "input",
       },

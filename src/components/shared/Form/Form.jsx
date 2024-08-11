@@ -6,6 +6,9 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from "../MaterialTable/MT";
 import { useLocation } from "react-router-dom";
 import { fetchEntity } from "../../../services/index.services";
+import RolesServices from "../../../services/roles.services";
+import UserServices from "../../../services/users.services";
+import GroupServices from "../../../services/groups.services";
 
 export default function Form({
   task,
@@ -25,34 +28,76 @@ export default function Form({
   }, [showUsers, showGroups, showRoles]);
 
   const [selectValueMap, setSelectValueMap] = useState({});
+  const [formData, setFormData] = useState({});
+  const [selected, setSelected] = useState(initialSelected);
+  const [selectList, setSelectList] = useState([]);
+  const [selectValues, setSelectValues] = useState({
+    users: [],
+    roles: [],
+    groups: [],
+  });
   const location = useLocation();
   const { id } = location.state || {};
 
   useEffect(() => {
-    const map = {};
-    inputs.forEach(({ selectValues }) => {
-      if (selectValues) {
-        selectValues.forEach(({ id, name, email }) => {
-          map[name || email] = id;
-        });
+    const initializeFormData = inputs.reduce((entry, field) => {
+      if (field.options.type === "input") {
+        entry[field.id] = "";
+      } else if (["roles", "users", "groups"].includes(field.name)) {
+        entry[field.name] = [];
       }
-    });
-    setSelectValueMap(map);
+      return entry;
+    }, {});
+
+    setFormData(initializeFormData);
   }, [inputs]);
 
-  const [selected, setSelected] = useState(initialSelected);
+  useEffect(() => {
+    const fetchSelects = async () => {
+      const rs = new RolesServices();
+      const us = new UserServices();
+      const gs = new GroupServices();
 
-  const initialState = inputs.reduce((entry, field) => {
-    if (field.options.type === "input") {
-      entry[field.id] = "";
-    } else if (["roles", "users", "groups"].includes(field.name)) {
-      entry[field.name] = [];
-    }
-    return entry;
-  }, {});
+      const [users, roles, groups] = await Promise.all([
+        us.getAllUsers(),
+        rs.getAllRoles(),
+        gs.getAllGroups(),
+      ]);
+
+      setSelectList({
+        users: users.data.map((user) => ({
+          id: user.id,
+          name: user.name || user.email,
+        })),
+        roles: roles.data.map((role) => ({
+          id: role.id,
+          name: role.name,
+        })),
+        groups: groups.data.map((group) => ({
+          id: group.id,
+          name: group.name,
+        })),
+      });
+      setSelectValues({
+        users: users.data.map((user) => ({
+          id: user.id,
+          name: user.name || user.email,
+        })),
+        roles: roles.data.map((role) => ({
+          id: role.id,
+          name: role.name,
+        })),
+        groups: groups.data.map((group) => ({
+          id: group.id,
+          name: group.name,
+        })),
+      });
+    };
+    fetchSelects();
+  }, []);
 
   useEffect(() => {
-    if (task === "update") {
+    if (task === "update" && id) {
       const fetchData = async () => {
         const data = await fetchEntity(showUsers, showGroups, showRoles, id);
         setFormData((prevFormData) => ({
@@ -64,12 +109,18 @@ export default function Form({
     }
   }, [task, showUsers, showGroups, showRoles, id]);
 
-  const [formData, setFormData] = useState(initialState);
-  const [selectValues, setSelectValues] = useState({});
-  const [tableData, setTableData] = useState({}); // Initialize with an empty object
-
-  const inputFields = inputs.filter((input) => input.options.type === "input");
-  const buttons = inputs.filter((input) => input.options.type === "button");
+  useEffect(() => {
+    const map = {};
+    Object.keys(selectValues).forEach((key) => {
+      const values = selectValues[key];
+      if (Array.isArray(values)) {
+        values.forEach(({ id, name, email }) => {
+          map[name || email] = id;
+        });
+      }
+    });
+    setSelectValueMap(map);
+  }, [selectValues]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -80,28 +131,22 @@ export default function Form({
   };
 
   const handleSelectChange = (name) => (e) => {
-    const { value } = e.target;
+    const { value, name } = e.target;
     const id = selectValueMap[value];
-    setSelectValues((prevSelectValues) => ({
-      ...prevSelectValues,
-      [name]: { value, id },
-    }));
-    setTableData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    if (id !== undefined) {
+      setSelectValues((prevSelectValues) => ({
+        ...prevSelectValues,
+        [name]: { value, id },
+      }));
+    }
   };
 
   const handleButtonClick = (name) => {
     const selectValue = selectValues[name];
-    if (
-      !selectValue ||
-      selectValue.value === "Select Roles" ||
-      selectValue.value === "Select Groups" ||
-      selectValue.value === "Select Users"
-    ) {
+    if (!selectValue || !selectValue.value) {
       return;
     }
+
     setFormData((prevFormData) => {
       const existingEntries = prevFormData[name] || [];
       if (existingEntries.some((entry) => entry.id === selectValue.id)) {
@@ -123,33 +168,38 @@ export default function Form({
     <form className="form" onSubmit={handleSubmit}>
       <div className="form-fields">
         {Err && <div style={{ color: "red" }}>Invalid Credentials!</div>}
-        {inputFields.map(
-          ({ id, type, label, name, selectValues = [], required }) => {
-            if (task === "update" && type === "password") {
-              return "";
-            }
+        {inputs
+          .filter((input) => input.options.type !== "button")
+          .map(({ id, type, label, name, required }) => {
+            if (task === "update" && type === "password") return null;
+
             const inputValue = formData[id] || "";
-            const selectValue =
-              selectValues.find(
-                (value) => value.id === selectValues[name]?.id
-              ) || {};
+            const selectValue = selectValues[name]?.value || "";
 
             if (type === "select" || type === "inputWithBtn") {
+              const optionsList = Array.isArray(selectList[name])
+                ? selectList[name]
+                : [];
               return (
                 <div key={id} className="input-select">
                   <select
                     name={name}
                     onChange={handleSelectChange(name)}
-                    value={selectValue.value || ""}
+                    value={selectValue}
                   >
                     <option value="" disabled>
                       {label}
                     </option>
-                    {selectValues.map((value, index) => (
-                      <option key={index} value={value.name || value.email}>
-                        {value.name || value.email}
-                      </option>
-                    ))}
+                    {optionsList &&
+                      optionsList.map((value, index) => (
+                        <option
+                          key={index}
+                          id={id}
+                          value={value.name || value.email}
+                        >
+                          {value.name || value.email}
+                        </option>
+                      ))}
                   </select>
                   <Button
                     text={"Add"}
@@ -160,6 +210,7 @@ export default function Form({
                 </div>
               );
             }
+
             return (
               <div key={id} className="input">
                 <input
@@ -175,8 +226,7 @@ export default function Form({
                 </label>
               </div>
             );
-          }
-        )}
+          })}
       </div>
 
       {type === "add/update" && (
@@ -185,51 +235,37 @@ export default function Form({
             {showRoles && <p onClick={() => setSelected("roles")}>Roles</p>}
             {showUsers && <p onClick={() => setSelected("users")}>Users</p>}
             {showGroups && <p onClick={() => setSelected("groups")}>Groups</p>}
-            {((showGroups && showRoles) || (showUsers && showGroups)) && (
-              <div
-                className={`${
-                  selected === "groups" ? `underline-groups` : `underline-roles`
-                }`}
-              ></div>
-            )}
-            {showRoles && showUsers && (
-              <div
-                className={`${
-                  selected === "roles"
-                    ? `underline-roles-two`
-                    : `underline-users`
-                }`}
-              ></div>
-            )}
+            {selected && <div className={`underline-${selected}`}></div>}
           </div>
-          <div>
-            <BasicTable
-              rows={formData[selected] || []} // Ensure formData[selected] is an array
-              onDelete={(id) => {
-                setFormData((prevFormData) => ({
-                  ...prevFormData,
-                  [selected]: prevFormData[selected].filter(
-                    (item) => item.id !== id
-                  ),
-                }));
-              }}
-            />
-          </div>
+          <BasicTable
+            rows={formData[selected] || []}
+            onDelete={(id) => {
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                [selected]: prevFormData[selected].filter(
+                  (item) => item.id !== id
+                ),
+              }));
+            }}
+          />
         </div>
       )}
       <div className="form-buttons">
-        {buttons.map((button) => (
-          <button key={button.id} type={button.type}>
-            {button.label}
-          </button>
-        ))}
-        {buttons[0]?.label === "Login" && <a href="/">Forgot Password?</a>}
+        {inputs
+          .filter((input) => input.options.type === "button")
+          .map((button) => (
+            <button key={button.id} type={button.type}>
+              {button.label}
+            </button>
+          ))}
+        {inputs[0]?.label === "Login" && <a href="/">Forgot Password?</a>}
       </div>
     </form>
   );
 }
 
 Form.propTypes = {
+  task: PropTypes.string.isRequired,
   inputs: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -247,6 +283,12 @@ Form.propTypes = {
         type: PropTypes.string.isRequired,
       }).isRequired,
       required: PropTypes.bool.isRequired,
-    }).isRequired
-  ),
+    })
+  ).isRequired,
+  type: PropTypes.string.isRequired,
+  showUsers: PropTypes.bool,
+  showGroups: PropTypes.bool,
+  showRoles: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  Err: PropTypes.string,
 };

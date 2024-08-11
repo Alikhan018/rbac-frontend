@@ -46,6 +46,17 @@ export default class RolesServices {
       return err;
     }
   }
+  async count() {
+    try {
+      if (!this.baseUrl) {
+        throw new Error("Base URL is not defined");
+      }
+      const response = await axios.get(`${this.baseUrl}/roles/count`);
+      return response.data.count[0].count;
+    } catch (err) {
+      console.log(err);
+    }
+  }
   async update(role) {
     const { id, name, users, groups, features } = role;
     try {

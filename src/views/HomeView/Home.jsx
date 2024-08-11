@@ -1,5 +1,4 @@
 import "./scss/home.css";
-
 import React from "react";
 import Card from "../../components/shared/Card/Card";
 import { users, groups, roles } from "../../props/cards";
