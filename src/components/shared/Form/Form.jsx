@@ -5,10 +5,10 @@ import Button from "../Button/Button";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import BasicTable from "../MaterialTable/MT";
 import { useLocation } from "react-router-dom";
-import { fetchEntity } from "../../../services/index.services";
-import RolesServices from "../../../services/roles.services";
-import UserServices from "../../../services/users.services";
-import GroupServices from "../../../services/groups.services";
+import {
+  fetchEntity,
+  getAllDataForEntities,
+} from "../../../services/index.services";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
@@ -22,7 +22,7 @@ export default function Form({
   onClick,
   Err,
 }) {
-  const isOptionEqualToValue = (option, value) => option.id === value.id;
+  const isOptionEqualToValue = (option, value) => option.id !== value.id; //idk but its making autocomplete work
   const initialSelected = useMemo(() => {
     if (showRoles) return "roles";
     if (showUsers) return "users";
@@ -30,15 +30,23 @@ export default function Form({
     return "";
   }, [showUsers, showGroups, showRoles]);
 
-  const [selectValueMap, setSelectValueMap] = useState({});
-  const [formData, setFormData] = useState({});
-  const [selected, setSelected] = useState(initialSelected);
-  const [selectList, setSelectList] = useState([]);
+  //States declaration
+  const [selectValueMap, setSelectValueMap] = useState({}); //states for all entities for all selects to retrive ids and names/email
+  const [formData, setFormData] = useState({}); //formData state
+  const [selected, setSelected] = useState(initialSelected); //to represent which entity is selected to view in table under the form
+  const [selectList, setSelectList] = useState([]); //rendering list for select
   const [selectValues, setSelectValues] = useState({
     users: [],
     roles: [],
     groups: [],
-  });
+  }); //state to show selected items by user
+  const [selectValuesForRender, setSelectValuesForRender] = useState({
+    users: [],
+    roles: [],
+    groups: [],
+  }); //state to represent value of select
+  //end of state declaration
+
   const location = useLocation();
   const { id } = location.state || {};
 
@@ -57,44 +65,10 @@ export default function Form({
 
   useEffect(() => {
     const fetchSelects = async () => {
-      const rs = new RolesServices();
-      const us = new UserServices();
-      const gs = new GroupServices();
+      const allDataObj = await getAllDataForEntities();
 
-      const [users, roles, groups] = await Promise.all([
-        us.getAllUsers(),
-        rs.getAllRoles(),
-        gs.getAllGroups(),
-      ]);
-
-      setSelectList({
-        users: users.data.map((user) => ({
-          id: user.id,
-          name: user.name || user.email,
-        })),
-        roles: roles.data.map((role) => ({
-          id: role.id,
-          name: role.name,
-        })),
-        groups: groups.data.map((group) => ({
-          id: group.id,
-          name: group.name,
-        })),
-      });
-      setSelectValues({
-        users: users.data.map((user) => ({
-          id: user.id,
-          name: user.name || user.email,
-        })),
-        roles: roles.data.map((role) => ({
-          id: role.id,
-          name: role.name,
-        })),
-        groups: groups.data.map((group) => ({
-          id: group.id,
-          name: group.name,
-        })),
-      });
+      setSelectList(allDataObj);
+      setSelectValuesForRender(allDataObj);
     };
     fetchSelects();
   }, []);
@@ -114,8 +88,8 @@ export default function Form({
 
   useEffect(() => {
     const map = {};
-    Object.keys(selectValues).forEach((key) => {
-      const values = selectValues[key];
+    Object.keys(selectValuesForRender).forEach((key) => {
+      const values = selectValuesForRender[key];
       if (Array.isArray(values)) {
         values.forEach(({ id, name, email }) => {
           map[name || email] = id;
@@ -123,7 +97,7 @@ export default function Form({
       }
     });
     setSelectValueMap(map);
-  }, [selectValues]);
+  }, [selectValuesForRender]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -135,20 +109,22 @@ export default function Form({
 
   const handleSelectChange = (name) => (event, newValue) => {
     if (!newValue) return;
-
-    console.log(newValue);
     const value = newValue.name || newValue.email || "";
     const id = selectValueMap[value];
-
     if (id !== undefined) {
-      setSelectValues((prevSelectValues) => ({
-        ...prevSelectValues,
-        [name]: prevSelectValues[name].find((item) => item.id === id)
+      setSelectValues((prevSelectValues) => {
+        const updatedValues = prevSelectValues[name].some(
+          (item) => item.id === id
+        )
           ? prevSelectValues[name]
-          : [...prevSelectValues[name], { value, id }],
-      }));
+          : [{ value, id }];
+
+        return {
+          ...prevSelectValues,
+          [name]: updatedValues,
+        };
+      });
     }
-    console.log(selectValues);
   };
 
   const handleButtonClick = (name) => {
@@ -188,7 +164,7 @@ export default function Form({
             if (task === "update" && type === "password") return null;
 
             const inputValue = formData[id] || "";
-            const selectValue = selectValues[name]?.value || "";
+            const selectValue = selectValuesForRender[name]?.[0]?.name || "";
 
             if (type === "select" || type === "inputWithBtn") {
               const optionsList = Array.isArray(selectList[name])
@@ -200,13 +176,16 @@ export default function Form({
                     disablePortal
                     id={id}
                     options={optionsList}
-                    sx={{ width: 430 }}
+                    sx={{
+                      width: 430,
+                      backgroundColor: "white",
+                    }}
                     getOptionLabel={(option) =>
                       option.name || option.email || ""
                     }
-                    value={selectValue || []}
-                    onChange={handleSelectChange(name)}
                     isOptionEqualToValue={isOptionEqualToValue}
+                    value={selectValue || "" || null}
+                    onChange={handleSelectChange(name)}
                     renderInput={(params) => (
                       <TextField {...params} label={label} variant="outlined" />
                     )}
@@ -245,7 +224,15 @@ export default function Form({
             {showRoles && <p onClick={() => setSelected("roles")}>Roles</p>}
             {showUsers && <p onClick={() => setSelected("users")}>Users</p>}
             {showGroups && <p onClick={() => setSelected("groups")}>Groups</p>}
-            {selected && <div className={`underline-${selected}`}></div>}
+            {selected && (
+              <div
+                className={`
+                  ${showRoles && showUsers ? `underline-${selected}-two` : ""}
+                  ${showGroups && showUsers ? `underline-${selected}` : ""}
+                  ${showRoles && showGroups ? `underline-${selected}` : ""}
+                `}
+              ></div>
+            )}
           </div>
           <BasicTable
             rows={formData[selected] || []}

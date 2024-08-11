@@ -1,6 +1,5 @@
 import "./scss/card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import UserServices from "../../../services/users.services.js";
 import RolesServices from "../../../services/roles.services.js";
 import GroupsServices from "../../../services/groups.services.js";

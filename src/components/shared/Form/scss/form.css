@@ -76,7 +76,7 @@
 .form .form-nav .underline-users {
   position: relative;
   top: 25px;
-  left: -63px;
+  left: -136px;
   width: 40px;
   height: 0px;
   border: 1px solid var(--blue);
@@ -92,6 +92,14 @@
   position: relative;
   top: 25px;
   left: -135px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.form .form-nav .underline-users-two {
+  position: relative;
+  top: 25px;
+  left: -63px;
   width: 40px;
   height: 0px;
   border: 1px solid var(--blue);

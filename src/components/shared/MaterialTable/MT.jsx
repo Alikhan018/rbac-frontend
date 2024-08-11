@@ -41,7 +41,6 @@ export default function BasicTable({ rows, onDelete }) {
                     onMouseLeave={() => setHoveredIndex(null)}
                     onClick={() => {
                       onDelete(row.id);
-                      console.log(row.id);
                     }}
                   />
                 </TableCell>
