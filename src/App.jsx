@@ -7,6 +7,7 @@ import Groups from "./views/Groups/Groups";
 import Roles from "./views/Roles/Roles";
 import { faUser, faUserGroup, faGear } from "@fortawesome/free-solid-svg-icons";
 import AddUpdate from "./views/AddUpdate/AddUpdate";
+import ViewData from "./views/View-Mode/ViewData";
 
 function App() {
   return (
@@ -55,6 +56,12 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/users/display/:id"
+              element={<ViewData entity={"users"} />}
+            />
+            <Route path="/roles/display/:id" element={<ViewData />} />
+            <Route path="/groups/display/:id" element={<ViewData />} />
           </Route>
         </Routes>
       </BrowserRouter>

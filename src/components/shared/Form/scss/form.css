@@ -46,7 +46,7 @@
   position: relative;
   top: -39px;
   left: 10px;
-  transition: 0.2s;
+  transition: 0.1s;
 }
 .form .form-fields .input input:focus + label, .form .form-fields .input input:valid + label {
   top: -49px;

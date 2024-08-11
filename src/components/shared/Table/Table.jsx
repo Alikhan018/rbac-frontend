@@ -5,6 +5,7 @@ import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import DropDown from "../../DropDown/DropDown";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function Table({
   header,
@@ -15,6 +16,7 @@ export default function Table({
   addBtn,
   onEdit,
 }) {
+  const navigate = useNavigate();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [clickedIndex, setClickedIndex] = useState(null);
 
@@ -35,7 +37,18 @@ export default function Table({
         </div>
         <div className="table-body">
           {data.map((tuple, tupleIndex) => (
-            <div key={tupleIndex} className="table-row">
+            <div
+              key={tupleIndex}
+              className="table-row"
+              style={{ color: hoveredIndex === tupleIndex ? "blue" : "black" }}
+              onMouseEnter={() => setHoveredIndex(tupleIndex)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              onClick={() => {
+                navigate(`display/${tuple.id}`, {
+                  state: { id: tuple.id },
+                });
+              }}
+            >
               {keys.map((key, keyIndex) => (
                 <span
                   key={keyIndex}
@@ -51,22 +64,29 @@ export default function Table({
                           cursor: "pointer",
                           color: hoveredIndex === tupleIndex ? "blue" : "black",
                           display: "flex",
+                          position: "absolute",
                           justifyContent: "flex-end",
                           alignItems: "center",
                           padding: "3px 0px 0px 0px",
+                          zIndex: 10,
                         }}
                         onMouseEnter={() => setHoveredIndex(tupleIndex)}
                         onMouseLeave={() => setHoveredIndex(null)}
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setClickedIndex(
                             clickedIndex === tupleIndex ? null : tupleIndex
-                          )
-                        }
+                          );
+                        }}
                       />
                       {clickedIndex === tupleIndex && (
                         <DropDown
-                          onDelete={() => onDelete(tuple.id)}
-                          onEdit={() => {
+                          onDelete={(e) => {
+                            e.stopPropagation();
+                            onDelete(tuple.id);
+                          }}
+                          onEdit={(e) => {
+                            e.stopPropagation();
                             onEdit(tuple.id);
                           }}
                         />

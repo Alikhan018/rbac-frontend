@@ -39,6 +39,7 @@
   width: 100%;
   border-bottom: 1px solid black;
   justify-content: space-between;
+  cursor: pointer;
 }
 .table .table-body .table-row span {
   width: 25%;
