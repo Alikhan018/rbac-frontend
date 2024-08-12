@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function BasicTable({ rows, onDelete }) {
+export default function BasicTable({ rows, onDelete, action }) {
   const [hoveredIndex, setHoveredIndex] = React.useState(null);
   return (
     <TableContainer component={Paper}>
@@ -17,7 +17,7 @@ export default function BasicTable({ rows, onDelete }) {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Action</TableCell>
+            {action && <TableCell align="right">Action</TableCell>}
           </TableRow>
         </TableHead>
         {rows && (
@@ -31,6 +31,7 @@ export default function BasicTable({ rows, onDelete }) {
                   {row.value || row.name || row.email}
                 </TableCell>
                 <TableCell align="right">
+                { action &&
                   <FontAwesomeIcon
                     icon={faTrash}
                     style={{
@@ -43,6 +44,7 @@ export default function BasicTable({ rows, onDelete }) {
                       onDelete(row.id);
                     }}
                   />
+                }
                 </TableCell>
               </TableRow>
             ))}

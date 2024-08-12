@@ -70,8 +70,10 @@ export default function Form({
       setSelectList(allDataObj);
       setSelectValuesForRender(allDataObj);
     };
-    fetchSelects();
-  }, []);
+    if (task !== "change-password") {
+      fetchSelects();
+    }
+  }, [task]);
 
   useEffect(() => {
     if (task === "update" && id) {
@@ -244,6 +246,7 @@ export default function Form({
                 ),
               }));
             }}
+            action={true}
           />
         </div>
       )}

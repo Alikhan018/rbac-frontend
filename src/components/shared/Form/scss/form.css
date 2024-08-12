@@ -12,7 +12,7 @@
 .form .form-fields {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 .form .form-fields .input-select {
   display: flex;

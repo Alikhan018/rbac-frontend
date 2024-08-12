@@ -1,5 +1,5 @@
-import React from "react";
-import { addForm, updateForm } from "../../props/forms";
+import React, { useState } from "react";
+import { addForm, changePassword, updateForm } from "../../props/forms";
 import Form from "../../components/shared/Form/Form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,11 +9,15 @@ import {
   createRole,
   updateGroup,
   updateRole,
+  changePasswordForUser,
 } from "../../props/formHandlers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function AddUpdate({ entity, icon, task }) {
+  const location = useLocation();
+  const id = location.state?.id || 0;
   const nav = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
   const styles = {
     display: "flex",
     flexDirection: "column",
@@ -29,19 +33,62 @@ export default function AddUpdate({ entity, icon, task }) {
         <FontAwesomeIcon icon={icon} style={{ paddingRight: "10px" }} />
         {task} {entity}
       </h3>
-      {entity === "user" && (
-        <Form
-          task={task}
-          inputs={task === "update" ? updateForm[entity] : addForm[entity]}
-          type={"add/update"}
-          showGroups={true}
-          showRoles={true}
-          showUsers={false}
-          onClick={(formData) => {
-            task === "update" ? updateUser(formData) : createUser(formData);
-            nav("/users");
-          }}
-        />
+      {entity === "user" && task === "change-password" && (
+        <>
+          {errorMessage && (
+            <div style={{ color: "red", marginTop: "10px" }}>
+              {errorMessage}
+            </div>
+          )}
+          <Form
+            task={task}
+            inputs={changePassword}
+            type={"change-password"}
+            showGroups={false}
+            showRoles={false}
+            showUsers={false}
+            onClick={async (formData) => {
+              const res = await changePasswordForUser(formData, id);
+              console.log(res);
+              if (res === "Not matched") {
+                setErrorMessage("Passwords do not match. Please try again.");
+                return;
+              }
+              setErrorMessage("");
+              nav("/users");
+            }}
+          />
+        </>
+      )}
+      {entity === "user" && task !== "change-password" && (
+        <>
+          {errorMessage && (
+            <div style={{ color: "red", marginTop: "10px" }}>
+              {errorMessage}
+            </div>
+          )}
+          <Form
+            task={task}
+            inputs={task === "update" ? updateForm[entity] : addForm[entity]}
+            type={"add/update"}
+            showGroups={true}
+            showRoles={true}
+            showUsers={false}
+            onClick={async (formData) => {
+              if (task === "update") {
+                updateUser(formData);
+              } else {
+                const res = await createUser(formData);
+                if (res === "Not matched") {
+                  setErrorMessage("Passwords donot match. Please try again");
+                  return;
+                }
+                setErrorMessage("");
+              }
+              nav("/users");
+            }}
+          />
+        </>
       )}
       {entity === "group" && (
         <Form

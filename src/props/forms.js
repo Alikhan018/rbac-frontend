@@ -54,6 +54,16 @@ const addForm = {
       required: true,
     },
     {
+      id: "password_two",
+      type: "password",
+      label: "Re-enter Password",
+      name: "password",
+      options: {
+        type: "input",
+      },
+      required: true,
+    },
+    {
       id: "roles",
       type: "inputWithBtn",
       label: "Select Roles",
@@ -314,4 +324,37 @@ const updateForm = {
     },
   ],
 };
-export { loginForm, addForm, updateForm };
+const changePassword = [
+  {
+    id: "password",
+    type: "password",
+    label: "Enter Password",
+    name: "password",
+    options: {
+      type: "input",
+    },
+    required: true,
+  },
+  {
+    id: "password_two",
+    type: "password",
+    label: "Re-enter Password",
+    name: "password",
+    options: {
+      type: "input",
+    },
+    required: true,
+  },
+  {
+    id: "3",
+    type: "submit",
+    label: "Change Password",
+    name: "",
+    options: {
+      type: "button",
+    },
+    required: false,
+  },
+];
+
+export { loginForm, addForm, updateForm, changePassword };

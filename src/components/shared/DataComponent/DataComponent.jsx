@@ -27,12 +27,14 @@ export default function DataComponent({
           icon={icon}
           style={{ width: "200px", height: "50px" }}
         />
-        <Button
-          text={"Change Password"}
-          type={"button"}
-          icon={faPen}
-          onClick={onClick}
-        />
+        {!showUsers && (
+          <Button
+            text={"Change Password"}
+            type={"button"}
+            icon={faPen}
+            onClick={onClick}
+          />
+        )}
       </div>
       <div className="data-right">
         <div className="details">
@@ -55,7 +57,11 @@ export default function DataComponent({
                 `}
           ></div>
         </div>
-        <BasicTable rows={entity[selected]} onDelete={() => {}} />
+        <BasicTable
+          rows={entity[selected]}
+          onDelete={() => {}}
+          action={false}
+        />
       </div>
     </div>
   );

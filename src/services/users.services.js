@@ -70,7 +70,6 @@ export default class UserServices {
     }
   }
   async update(user) {
-    console.log(user);
     const { id, email, roles, groups } = user;
     try {
       if (!this.baseUrl) {
@@ -84,6 +83,30 @@ export default class UserServices {
       return response.data;
     } catch (err) {
       console.log(err);
+      return err;
+    }
+  }
+  matchPassword(data) {
+    if (data.password !== data.password_two) {
+      return false;
+    }
+    return true;
+  }
+  async changePasswordForUser(data, id) {
+    try {
+      const res = this.matchPassword(data);
+      if (res) {
+        const newPassword = data.password;
+        const response = await axios.put(
+          `${this.baseUrl}/users/${id}/changepassword`,
+          {
+            newPassword,
+          }
+        );
+        return response.data;
+      }
+      return "Not matched";
+    } catch (err) {
       return err;
     }
   }

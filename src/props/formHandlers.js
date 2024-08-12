@@ -4,7 +4,12 @@ import GroupServices from "../services/groups.services";
 
 export const createUser = async (userData) => {
   const us = new UserServices();
-  await us.create(userData);
+  const matchPassword = us.matchPassword(userData);
+  if (matchPassword) {
+    await us.create(userData);
+    return "user created";
+  }
+  return "Not matched";
 };
 export const updateUser = async (userData) => {
   const us = new UserServices();
@@ -27,4 +32,10 @@ export const createRole = async (roleData) => {
 export const updateRole = async (roleData) => {
   const rs = new RolesServices();
   await rs.update(roleData);
+};
+
+export const changePasswordForUser = async (data, id) => {
+  const us = new UserServices();
+  const res = await us.changePasswordForUser(data, id);
+  return res;
 };

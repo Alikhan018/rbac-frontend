@@ -14,7 +14,7 @@ export default function ViewData({ entity, showUsers, showRoles, showGroups }) {
     return "";
   }, [showUsers, showGroups, showRoles]);
   const location = useLocation();
-  const { id } = location.state || null;
+  const id = location.state.id || 0;
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetch = async () => {
@@ -23,7 +23,7 @@ export default function ViewData({ entity, showUsers, showRoles, showGroups }) {
     fetch();
   }, [id, entity]);
   const changeButtonClick = () => {
-    navigate("change-password");
+    navigate("change-password", { state: { id: data.id } });
   };
 
   return (
