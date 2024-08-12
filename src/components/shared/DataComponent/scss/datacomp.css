@@ -1,0 +1,87 @@
+:root {
+  --blue: #0039a6;
+}
+
+.data-comp {
+  display: flex;
+  gap: 40px;
+}
+.data-comp .data-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.data-comp .data-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.data-comp .data-right .details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.data-comp .data-right .details p {
+  font-size: 14px;
+}
+.data-comp .data-right .details p:hover {
+  color: var(--blue);
+}
+.data-comp .data-right .navigation {
+  display: flex;
+  gap: 20px;
+}
+.data-comp .data-right .navigation p {
+  cursor: pointer;
+  font-size: 20px;
+}
+.data-comp .data-right .navigation p:hover {
+  color: var(--blue);
+}
+.data-comp .data-right .navigation .underline-roles-two {
+  position: relative;
+  top: 25px;
+  left: -125px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.data-comp .data-right .navigation .underline-users {
+  position: relative;
+  top: 25px;
+  left: -136px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.data-comp .data-right .navigation p {
+  cursor: pointer;
+  font-size: 18px;
+}
+.data-comp .data-right .navigation p:hover {
+  color: var(--blue);
+}
+.data-comp .data-right .navigation .underline-roles {
+  position: relative;
+  top: 25px;
+  left: -135px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.data-comp .data-right .navigation .underline-users-two {
+  position: relative;
+  top: 25px;
+  left: -63px;
+  width: 40px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}
+.data-comp .data-right .navigation .underline-groups {
+  position: relative;
+  top: 25px;
+  left: -76px;
+  width: 60px;
+  height: 0px;
+  border: 1px solid var(--blue);
+}/*# sourceMappingURL=datacomp.css.map */

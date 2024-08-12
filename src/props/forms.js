@@ -1,7 +1,3 @@
-
-
-
-
 const loginForm = [
   {
     id: "email",

@@ -57,11 +57,11 @@ function App() {
               }
             />
             <Route
-              path="/users/display/:id"
-              element={<ViewData entity={"users"} />}
+              path="/users/:id"
+              element={<ViewData entity={"users"} showRoles={true} showGroups={true} showUsers={false}/>}
             />
-            <Route path="/roles/display/:id" element={<ViewData />} />
-            <Route path="/groups/display/:id" element={<ViewData />} />
+            <Route path="/roles/:id" element={<ViewData entity={"roles"} showRoles={false} showGroups={true} showUsers={true}/>} />
+            <Route path="/groups/:id" element={<ViewData entity={"groups"} showRoles={true} showGroups={false} showUsers={true}/>} />
           </Route>
         </Routes>
       </BrowserRouter>

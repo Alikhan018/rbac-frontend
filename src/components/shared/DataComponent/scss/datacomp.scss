@@ -1,0 +1,87 @@
+:root {
+  --blue: #0039a6;
+}
+.data-comp {
+  display: flex;
+  gap: 40px;
+  .data-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .data-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      p {
+        font-size: 14px;
+        &:hover {
+          color: var(--blue);
+        }
+      }
+    }
+    .navigation {
+      display: flex;
+      gap: 20px;
+      p {
+        cursor: pointer;
+        font-size: 20px;
+        &:hover {
+          color: var(--blue);
+        }
+      }
+      .underline-roles-two {
+        position: relative;
+        top: 25px;
+        left: -125px;
+        width: 40px;
+        height: 0px;
+        border: 1px solid var(--blue);
+      }
+      .underline-users {
+        position: relative;
+        top: 25px;
+        left: -136px;
+        width: 40px;
+        height: 0px;
+        border: 1px solid var(--blue);
+      }
+      p {
+        cursor: pointer;
+        font-size: 18px;
+        &:hover {
+          color: var(--blue);
+        }
+      }
+
+      .underline-roles {
+        position: relative;
+        top: 25px;
+        left: -135px;
+        width: 40px;
+        height: 0px;
+        border: 1px solid var(--blue);
+      }
+      .underline-users-two {
+        position: relative;
+        top: 25px;
+        left: -63px;
+        width: 40px;
+        height: 0px;
+        border: 1px solid var(--blue);
+      }
+      .underline-groups {
+        position: relative;
+        top: 25px;
+        left: -76px;
+        width: 60px;
+        height: 0px;
+        border: 1px solid var(--blue);
+      }
+    }
+  }
+}

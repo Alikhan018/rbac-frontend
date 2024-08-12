@@ -1,0 +1,9 @@
+.view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px;
+  background-color: rgb(236, 236, 236);
+}/*# sourceMappingURL=view.css.map */

@@ -44,7 +44,7 @@ export default function Table({
               onMouseEnter={() => setHoveredIndex(tupleIndex)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => {
-                navigate(`display/${tuple.id}`, {
+                navigate(`${tuple.id}`, {
                   state: { id: tuple.id },
                 });
               }}
