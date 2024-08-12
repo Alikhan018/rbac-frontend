@@ -66,7 +66,6 @@ export default function Form({
   useEffect(() => {
     const fetchSelects = async () => {
       const allDataObj = await getAllDataForEntities();
-      console.log(allDataObj);
       setSelectList(allDataObj);
       setSelectValuesForRender(allDataObj);
     };

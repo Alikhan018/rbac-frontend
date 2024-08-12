@@ -31,6 +31,7 @@ export default function ViewData({ entity, showUsers, showRoles, showGroups }) {
       {id ? (
         <div className="view-container">
           <DataComponent
+          type={entity}
             entity={data}
             icon={icon}
             showUsers={showUsers}

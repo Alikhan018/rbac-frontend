@@ -3,9 +3,14 @@ import React, { useMemo, useState } from "react";
 import BasicTable from "../MaterialTable/MT";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../Button/Button";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faKey, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import UserServices from "../../../services/users.services";
+import RolesServices from "../../../services/roles.services";
+import GroupServices from "../../../services/groups.services";
 
 export default function DataComponent({
+  type,
   entity,
   icon,
   showRoles,
@@ -13,6 +18,7 @@ export default function DataComponent({
   showUsers,
   onClick,
 }) {
+  const navigate = useNavigate();
   const initialSelected = useMemo(() => {
     if (showRoles) return "roles";
     if (showUsers) return "users";
@@ -27,14 +33,56 @@ export default function DataComponent({
           icon={icon}
           style={{ width: "200px", height: "50px" }}
         />
+        <Button
+          text={`Edit ${entity.name || entity.email}`}
+          type={"submit"}
+          icon={faPen}
+          onClick={() => {
+            navigate(`/edit-${type.slice(0, -1)}`, {
+              state: { id: entity.id },
+            });
+          }}
+        />
         {!showUsers && (
           <Button
             text={"Change Password"}
             type={"button"}
-            icon={faPen}
+            icon={faKey}
             onClick={onClick}
           />
         )}
+        <Button
+          text={`Delete ${entity.name || entity.email}`}
+          type={"reset"}
+          icon={faTrash}
+          onClick={async () => {
+            if (type === "users") {
+              const us = new UserServices();
+              try {
+                us.deleteUser(entity.id);
+              } catch (err) {
+                console.log(err);
+              }
+            }
+            if (type === "roles") {
+              const rs = new RolesServices();
+              try {
+                rs.deleteRole(entity.id);
+              } catch (err) {
+                console.log(err);
+              }
+            }
+            if (type === "groups") {
+              const gs = new GroupServices();
+              try {
+                gs.deleteGroup(entity.id);
+              } catch (err) {
+                console.log(err);
+              }
+            }
+            navigate(`/${type}`);
+          }}
+        />
       </div>
       <div className="data-right">
         <div className="details">
